@@ -15,14 +15,18 @@ export default function RootLayout({ children }) {
             <a href="/" className="font-mono text-sm font-bold text-slate-800 no-underline">
               ethos
             </a>
-            <nav className="flex items-center gap-4">
+            <nav className="flex items-center gap-6">
               <a
-                href="https://guildry.paulb.pro"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/projects"
                 className="font-mono text-xs text-slate-500 hover:text-slate-800 no-underline transition-colors"
               >
-                Guildry →
+                Projects
+              </a>
+              <a
+                href="/log"
+                className="font-mono text-xs text-slate-500 hover:text-slate-800 no-underline transition-colors"
+              >
+                Log
               </a>
             </nav>
           </div>

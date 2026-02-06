@@ -362,28 +362,25 @@ export default function EthosPage() {
         </div>
       </section>
 
-      {/* Current Projects */}
+      {/* Projects CTA */}
       <section className="border-t border-slate-200 pt-12 mb-16">
         <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
-          Active Project
+          Portfolio
         </h2>
         <a
-          href="https://guildry.paulb.pro"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block rounded-xl p-6 border border-teal-200 bg-teal-50 no-underline hover:border-teal-300 hover:shadow-sm transition-all"
+          href="/projects"
+          className="block rounded-xl p-6 border border-slate-200 bg-slate-50 no-underline hover:border-slate-300 hover:shadow-sm transition-all"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-2xl">📐</span>
-            <div>
-              <h3 className="font-mono text-lg font-semibold text-slate-800 m-0">Guildry</h3>
-              <span className="font-mono text-[10px] text-teal-600">Layer 1 · In Progress</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🏭</span>
+              <div>
+                <h3 className="font-mono text-lg font-semibold text-slate-800 m-0">View Projects</h3>
+                <span className="font-mono text-[10px] text-slate-500">Track active experiments and outcomes</span>
+              </div>
             </div>
+            <span className="font-mono text-sm text-slate-400">→</span>
           </div>
-          <p className="text-sm text-slate-600 m-0">
-            Project intelligence for agencies. Scope, staff, deliver, and learn from every project.
-            A system that gets smarter with each project you close.
-          </p>
         </a>
       </section>
 
