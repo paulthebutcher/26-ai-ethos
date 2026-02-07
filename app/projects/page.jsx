@@ -16,7 +16,11 @@ const PROJECTS = [
       github: "https://github.com/paulthebutcher/guildry",
     },
     thesis: "Services firms have years of project data but no way to learn from it. LLMs can now extract patterns from unstructured history and use them to improve future estimates.",
-    signals: [],
+    signals: [
+      "Phase 1 complete - Blueprint (scoping), Bench (talent), Retro (learnings) all working",
+      "Core loop functional: Scope → Staff → Deliver → Learn",
+      "Built in ~3 hours across 2 sessions - validates rapid development thesis",
+    ],
     icon: "📐",
     color: "#0d9488",
   },
