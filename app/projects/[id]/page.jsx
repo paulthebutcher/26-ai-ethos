@@ -5,6 +5,140 @@ import Link from "next/link";
 
 // Project detail data with approaches and test plans
 const PROJECT_DETAILS = {
+  "smart-cms": {
+    id: "smart-cms",
+    name: "Smart CMS",
+    tagline: "AI-powered website migration and generation",
+    icon: "🌐",
+    color: "#059669",
+    description: "Crawl any existing site, extract semantic structure, rebuild as clean Next.js with intuitive editing. Or generate new sites from learned patterns.",
+    thesis: "Website migration is painful and expensive. AI can understand semantic structure (not just scrape HTML) and rebuild sites that clients can actually edit.",
+    problem: `
+Website migration and creation is broken for small businesses:
+
+Agencies charge $5-15k to rebuild a site that already exists somewhere else. DIY tools like Squarespace and Wix produce cookie-cutter results. Custom builds are expensive and leave clients dependent on developers for every text change.
+
+The real problem? Existing tools either scrape HTML (garbage in, garbage out) or start from blank templates. Nobody's teaching AI to understand what a nav, hero section, testimonial block, or pricing table actually is.
+    `.trim(),
+    approaches: [
+      {
+        name: "Migration-First MVP (Recommended)",
+        description: "Start with crawling and rebuilding existing sites, add generation later",
+        buildTime: "2-3 weeks",
+        complexity: "High",
+        details: [
+          "AI crawler extracts semantic structure, not raw HTML",
+          "Outputs component JSON model (nav, hero, testimonials, etc.)",
+          "Auto-generates scoped visual editor for that specific site",
+          "Next.js build pipeline deployed to Vercel",
+          "One MCP integration (scheduling) to prove the hub concept",
+        ],
+        pros: [
+          "Immediate value, clients have a site to migrate",
+          "Real pilot client ready (pilates studio)",
+          "Every crawl feeds the generation model later",
+          "Proves the hard part (semantic understanding) first",
+        ],
+        cons: [
+          "High complexity, lots of edge cases in real sites",
+          "Need to decide how opinionated to be about fixing messy designs",
+          "Migration is one-time revenue, need subscription upsell",
+        ],
+      },
+      {
+        name: "Generation-First",
+        description: "Build vertical-specific site generators, add migration later",
+        buildTime: "2 weeks",
+        complexity: "Medium",
+        details: [
+          "Start with one vertical (fitness/wellness)",
+          "Curated component library based on best practices",
+          "AI generates sites from business description + preferences",
+          "Same editing layer and build pipeline",
+          "Migration comes later as crawl data accumulates",
+        ],
+        pros: [
+          "Cleaner output, no messy source sites to deal with",
+          "Subscription model from day one",
+          "Can target specific verticals with tailored components",
+          "Faster to MVP",
+        ],
+        cons: [
+          "Another website builder in a crowded market",
+          "No data flywheel until migration is added",
+          "Harder to differentiate without the migration angle",
+        ],
+      },
+      {
+        name: "MCP Hub First",
+        description: "Build the integration layer, let sites come later",
+        buildTime: "1-2 weeks",
+        complexity: "Medium",
+        details: [
+          "Standardized MCP servers for scheduling, payments, CRM, reviews",
+          "Works with any frontend initially",
+          "Position as integration infrastructure for the incubator",
+          "Sites become the delivery mechanism for integrations",
+        ],
+        pros: [
+          "Integrations are reusable across all incubator tools",
+          "Lower risk, integrations are well-defined",
+          "Guildry and other tools benefit immediately",
+          "Can validate integration demand without full CMS",
+        ],
+        cons: [
+          "Doesn't prove the core thesis (semantic understanding)",
+          "Integration-only business is harder to monetize",
+          "Need a frontend eventually anyway",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Small businesses will pay $99/mo for a site they can actually edit, migrated from their existing mess in under a week",
+      validation: [
+        {
+          phase: "Pilot Migration",
+          duration: "2-3 weeks",
+          actions: [
+            "Crawl the pilates studio client's existing site",
+            "Build the semantic extraction pipeline",
+            "Generate Next.js site with editing layer",
+            "Deploy and get client feedback on editing experience",
+          ],
+          successMetric: "Client can edit headlines, images, and schedule without developer help",
+        },
+        {
+          phase: "Expand to 3 Sites",
+          duration: "2 weeks",
+          actions: [
+            "Find 2 more pilot clients in fitness/wellness vertical",
+            "Run same pipeline, track time and edge cases",
+            "Document patterns: what components repeat, what breaks",
+            "Add scheduling MCP integration to all three",
+          ],
+          successMetric: "Migration time under 1 week per site, clients actively using editor",
+        },
+        {
+          phase: "Pricing Validation",
+          duration: "2 weeks",
+          actions: [
+            "Propose pricing to pilot clients: $500 migration + $99/mo hosting",
+            "Gauge reaction, adjust based on feedback",
+            "Create landing page for waitlist",
+            "Run small ad test targeting local businesses with ugly sites",
+          ],
+          successMetric: "2/3 pilots convert to paid, 20+ waitlist signups",
+        },
+      ],
+      killCriteria: [
+        "Semantic extraction quality is too inconsistent across real sites",
+        "Clients don't actually use the editing layer",
+        "Migration takes more than 2 weeks per site",
+        "No willingness to pay at target price point",
+      ],
+    },
+  },
+
   changelog: {
     id: "changelog",
     name: "Changelog",

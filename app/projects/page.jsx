@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 // Projects with detail pages
-const PROJECTS_WITH_DETAILS = ["changelog", "brief", "recap"];
+const PROJECTS_WITH_DETAILS = ["smart-cms", "changelog", "brief", "recap"];
 
 const PROJECTS = [
   // === IN PROGRESS ===
@@ -30,6 +30,25 @@ const PROJECTS = [
   },
 
   // === EVALUATING ===
+  // Anchor tool for the incubator
+  {
+    id: "smart-cms",
+    name: "Smart CMS",
+    tagline: "AI-powered website migration and generation",
+    description: "Crawl any existing site, extract semantic structure, rebuild as clean Next.js with intuitive editing. Or generate new sites from learned patterns.",
+    status: "evaluating",
+    layer: 1,
+    started: null,
+    links: {},
+    thesis: "Website migration is painful and expensive. AI can understand semantic structure (not just scrape HTML) and rebuild sites that clients can actually edit.",
+    signals: [
+      "Anchor tool for the incubator, shared infrastructure for all future tools",
+      "Real client ready for pilot (pilates studio)",
+      "MCP integration hub benefits entire portfolio",
+    ],
+    icon: "🌐",
+    color: "#059669",
+  },
   // Projects with implementation plans (prioritized)
   {
     id: "changelog",
