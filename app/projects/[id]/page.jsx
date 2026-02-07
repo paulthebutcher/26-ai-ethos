@@ -12,15 +12,13 @@ const PROJECT_DETAILS = {
     icon: "📋",
     color: "#6366f1",
     description: "AI generates changelogs from git commits, PRs, and tickets. Ship updates without the writing overhead.",
-    thesis: "Product changelogs are tedious to write. Fully automatable from git - freemium for public repos, paid for private.",
+    thesis: "Product changelogs are tedious to write. This is fully automatable from git. Free for public repos, paid for private.",
     problem: `
 Most teams skip changelogs because writing them is tedious:
-- Digging through PRs and commits takes time
-- Translating technical changes to user-facing language is hard
-- Nobody owns it, so it doesn't happen
-- Users get surprised by changes or miss new features
 
-The result: frustrated users, repeated support questions, and missed adoption of new features.
+Digging through PRs and commits takes forever. Translating technical changes to user-facing language is surprisingly hard. Nobody owns it, so it just... doesn't happen. Users get surprised by changes or miss new features entirely.
+
+The result? Frustrated users, repeated support questions, and missed adoption of new features.
     `.trim(),
     approaches: [
       {
@@ -32,19 +30,19 @@ The result: frustrated users, repeated support questions, and missed adoption of
           "GitHub App installed at org or repo level",
           "Watches for release events or tagged commits",
           "Reads PR titles, descriptions, and linked issues",
-          "Uses Claude to generate user-friendly changelog",
+          "Uses Claude to generate friendly changelog copy",
           "Creates release notes or updates CHANGELOG.md via PR",
         ],
         pros: [
-          "Native GitHub experience - users don't leave their workflow",
-          "GitHub Marketplace distribution - built-in discovery",
+          "Native GitHub experience, users stay in their workflow",
+          "GitHub Marketplace gives you built-in discovery",
           "Freemium model: free for public, paid for private repos",
-          "Can improve over time by learning from edited changelogs",
+          "Gets smarter over time by learning from edited changelogs",
         ],
         cons: [
-          "GitHub-only initially (GitLab, Bitbucket later)",
-          "Competitive space - need strong differentiation",
-          "GitHub API rate limits for free tier",
+          "GitHub-only at first (GitLab, Bitbucket come later)",
+          "Competitive space, need strong differentiation",
+          "GitHub API rate limits on free tier",
         ],
       },
       {
@@ -60,13 +58,13 @@ The result: frustrated users, repeated support questions, and missed adoption of
           "Works offline, runs locally",
         ],
         pros: [
-          "Fastest to build - just a CLI wrapper around Claude",
-          "Platform agnostic - works with any git host",
-          "Privacy-focused - code stays local",
+          "Fastest to build, just a CLI wrapper around Claude",
+          "Platform agnostic, works with any git host",
+          "Privacy-focused since code stays local",
           "Can be part of CI/CD pipelines",
         ],
         cons: [
-          "Requires user action - not automatic",
+          "Requires user action, not automatic",
           "Harder to monetize CLI tools",
           "Less viral distribution than marketplace",
         ],
@@ -80,19 +78,19 @@ The result: frustrated users, repeated support questions, and missed adoption of
           "OAuth with GitHub/GitLab/Bitbucket",
           "Dashboard to configure repos and preferences",
           "Webhook-based changelog generation",
-          "Hosted changelog pages (e.g., changelog.yourapp.com)",
-          "Widget embeds for your marketing site",
+          "Hosted changelog pages (like changelog.yourapp.com)",
+          "Widget embeds for marketing sites",
         ],
         pros: [
           "Full control over user experience",
-          "Can offer hosted changelog pages as differentiator",
+          "Can offer hosted changelog pages as a differentiator",
           "Multiple VCS support from day one",
-          "More features = higher price point",
+          "More features means higher price point",
         ],
         cons: [
           "More infrastructure to maintain",
           "Longer to build, more to go wrong",
-          "Users must leave their workflow to configure",
+          "Users have to leave their workflow to configure",
         ],
       },
     ],
@@ -134,7 +132,7 @@ The result: frustrated users, repeated support questions, and missed adoption of
         },
       ],
       killCriteria: [
-        "< 20 waitlist signups after $100 ad spend",
+        "Fewer than 20 waitlist signups after $100 ad spend",
         "Quality feedback is consistently negative",
         "No interest in paying even after seeing value",
         "Competitive products already nail this",
@@ -145,19 +143,17 @@ The result: frustrated users, repeated support questions, and missed adoption of
   brief: {
     id: "brief",
     name: "Brief",
-    tagline: "Vague briefs → structured requirements",
+    tagline: "Vague briefs into structured requirements",
     icon: "🎨",
     color: "#a855f7",
     description: "AI asks clarifying questions and generates structured creative briefs from conversation. Reduce rework from unclear requirements.",
     thesis: "Creative briefs are vague and cause rework. Conversational AI can extract structured requirements through guided questions.",
     problem: `
 Creative and agency work suffers from vague briefs:
-- Clients say "make it pop" or "I'll know it when I see it"
-- Requirements are buried in email threads
-- Missing info isn't discovered until review rounds
-- Rework eats into margins (studies show 30-50% of agency time)
 
-The brief is the contract - when it's unclear, everyone loses.
+Clients say "make it pop" or "I'll know it when I see it." Requirements are buried in email threads. Missing info isn't discovered until review rounds. Rework eats into margins (studies show 30-50% of agency time goes here).
+
+The brief is basically the contract. When it's unclear, everyone loses.
     `.trim(),
     approaches: [
       {
@@ -174,12 +170,12 @@ The brief is the contract - when it's unclear, everyone loses.
         ],
         pros: [
           "Reuses Guildry's conversation engine patterns",
-          "Client-facing = agencies can white-label",
+          "Client-facing means agencies can white-label it",
           "Clear value prop: fewer revision rounds",
           "Can charge per-brief or subscription",
         ],
         cons: [
-          "Requires client adoption - they must use the tool",
+          "Requires client adoption, they have to actually use the tool",
           "Brief quality depends on client engagement",
           "Competitive with existing brief templates",
         ],
@@ -200,12 +196,12 @@ The brief is the contract - when it's unclear, everyone loses.
           "No client behavior change required",
           "Works with existing communication",
           "Catches requirements that would be missed",
-          "Higher value = higher price point",
+          "Higher value means higher price point",
         ],
         cons: [
           "More complex integration requirements",
           "Privacy concerns with email/Slack access",
-          "Quality depends on communication completeness",
+          "Quality depends on how complete the communication is",
         ],
       },
       {
@@ -229,7 +225,7 @@ The brief is the contract - when it's unclear, everyone loses.
         cons: [
           "Platform-specific builds required",
           "Plugin review/approval delays",
-          "Limited compared to standalone app",
+          "More limited than a standalone app",
         ],
       },
     ],
@@ -282,17 +278,15 @@ The brief is the contract - when it's unclear, everyone loses.
   recap: {
     id: "recap",
     name: "Recap",
-    tagline: "Structured meeting notes with decisions & owners",
+    tagline: "Structured meeting notes with decisions and owners",
     icon: "📝",
     color: "#3b82f6",
     description: "AI generates consistent recaps with decisions, owners, and next steps. Never miss an action item.",
     thesis: "Meeting notes are inconsistent or missing. Differentiate on structure: decisions, owners, deadlines extracted automatically.",
     problem: `
 Meeting notes are broken:
-- 90% of meetings have no notes or terrible notes
-- Action items get lost in paragraph summaries
-- No accountability - "who said they'd do that?"
-- Same discussions repeat because decisions aren't recorded
+
+90% of meetings have no notes or terrible notes. Action items get lost in paragraph summaries. There's no accountability ("who said they'd do that?"). Same discussions repeat because decisions aren't recorded.
 
 Existing tools transcribe but don't structure. Transcripts are just more text to read.
     `.trim(),
@@ -310,8 +304,8 @@ Existing tools transcribe but don't structure. Transcripts are just more text to
           "Follow-up reminders for action items",
         ],
         pros: [
-          "Validated market - people pay for meeting tools",
-          "Clear differentiation: structure > raw transcription",
+          "Validated market, people already pay for meeting tools",
+          "Clear differentiation: structure beats raw transcription",
           "High retention potential with team workflows",
           "Obvious upgrade path: analytics, search, etc.",
         ],
@@ -332,17 +326,17 @@ Existing tools transcribe but don't structure. Transcripts are just more text to
           "AI processes and extracts structured data",
           "Output: decisions, actions, owners in clean format",
           "Export to Notion, email, Slack, etc.",
-          "No bot needed - works with any source",
+          "No bot needed, works with any source",
         ],
         pros: [
-          "Fastest to build - no integrations needed",
+          "Fastest to build, no integrations needed",
           "Works with any meeting platform",
-          "Lower privacy concerns - user controls upload",
+          "Lower privacy concerns since user controls upload",
           "Can process historical meetings",
         ],
         cons: [
-          "Extra step for users - must upload/paste",
-          "Not automatic - requires action",
+          "Extra step for users, must upload/paste",
+          "Not automatic, requires action",
           "Harder to build habit/retention",
         ],
       },
@@ -361,12 +355,12 @@ Existing tools transcribe but don't structure. Transcripts are just more text to
         pros: [
           "Many teams already discuss in Slack",
           "Slack App Directory distribution",
-          "Low friction - no new tool to adopt",
+          "Low friction, no new tool to adopt",
           "Can expand to async decisions too",
         ],
         cons: [
           "Limited to Slack-first teams",
-          "Quality depends on Slack discussion completeness",
+          "Quality depends on how complete the Slack discussion is",
           "Slack's meeting features are limited",
         ],
       },
@@ -389,7 +383,7 @@ Existing tools transcribe but don't structure. Transcripts are just more text to
           phase: "Upload MVP",
           duration: "1 week",
           actions: [
-            "Build simple upload → process → output flow",
+            "Build simple upload, process, output flow",
             "Launch to Product Hunt / Twitter",
             "Offer 10 free recaps, then $10/mo",
             "Track: uploads, conversions, feedback",
