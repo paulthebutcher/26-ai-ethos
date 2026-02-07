@@ -1,5 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+
+// Projects with detail pages
+const PROJECTS_WITH_DETAILS = ["changelog", "brief", "recap"];
 
 const PROJECTS = [
   // === IN PROGRESS ===
@@ -327,21 +331,48 @@ const FILTER_CONFIG = [
 ];
 
 function CompactProjectCard({ project }) {
-  return (
-    <div className="rounded-xl border border-slate-200 p-4 bg-white hover:border-slate-300 transition-colors">
+  const hasDetail = PROJECTS_WITH_DETAILS.includes(project.id);
+
+  const cardContent = (
+    <>
       <div className="flex items-start gap-3 mb-2">
         <span className="text-2xl">{project.icon}</span>
         <div className="flex-1 min-w-0">
           <h3 className="font-mono text-sm font-semibold text-slate-800 m-0">{project.name}</h3>
           <p className="text-xs text-slate-500 m-0 truncate">{project.tagline}</p>
         </div>
+        {hasDetail && (
+          <span className="text-slate-400 text-xs">→</span>
+        )}
       </div>
       <p className="text-xs text-slate-600 mb-3 m-0 line-clamp-2">{project.thesis}</p>
       <div className="flex items-center gap-2">
         <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-indigo-50 border border-indigo-200 text-indigo-600">
           Layer {project.layer}
         </span>
+        {hasDetail && (
+          <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-purple-50 border border-purple-200 text-purple-600">
+            View Plan
+          </span>
+        )}
       </div>
+    </>
+  );
+
+  if (hasDetail) {
+    return (
+      <Link
+        href={`/projects/${project.id}`}
+        className="rounded-xl border border-slate-200 p-4 bg-white hover:border-slate-300 hover:shadow-sm transition-all block no-underline"
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="rounded-xl border border-slate-200 p-4 bg-white hover:border-slate-300 transition-colors">
+      {cardContent}
     </div>
   );
 }
