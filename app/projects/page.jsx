@@ -3,7 +3,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 // Projects with detail pages
-const PROJECTS_WITH_DETAILS = ["smart-cms", "changelog", "brief", "recap"];
+const PROJECTS_WITH_DETAILS = [
+  "smart-cms", "changelog", "brief", "recap",
+  "intake", "drift", "pulse", "handoff",
+  "terms", "forecast", "audit",
+  "docs", "onboard", "standup"
+];
 
 const PROJECTS = [
   // === IN PROGRESS ===

@@ -544,6 +544,1339 @@ Existing tools transcribe but don't structure. Transcripts are just more text to
       ],
     },
   },
+
+  intake: {
+    id: "intake",
+    name: "Intake",
+    tagline: "Client intake calls to structured requirements",
+    icon: "🎙️",
+    color: "#8b5cf6",
+    description: "AI joins client calls, extracts requirements, flags gaps, and drafts SOW starters. Turn unstructured discovery into actionable specs.",
+    thesis: "Client intake calls are unstructured and notes get lost. Transcription APIs are mature enough to extract structured requirements automatically, saving 2+ hours per client.",
+    problem: `
+Discovery calls are where projects go wrong before they start:
+
+Someone takes notes (maybe). Requirements get scattered across emails, docs, and memory. By the time you write the SOW, you've forgotten half of what was discussed. Gaps don't surface until the project is underway.
+
+The irony? The client told you everything you needed. You just didn't capture it in a usable way.
+    `.trim(),
+    approaches: [
+      {
+        name: "Meeting Bot + Extraction (Recommended)",
+        description: "Bot joins calls, transcribes, and extracts structured requirements",
+        buildTime: "2 weeks",
+        complexity: "High",
+        details: [
+          "Zoom/Meet/Teams bot joins scheduled intake calls",
+          "Real-time transcription via Deepgram or Assembly",
+          "Claude extracts: goals, requirements, constraints, timeline, budget signals",
+          "Flags gaps: 'Budget not discussed', 'Timeline unclear'",
+          "Outputs draft SOW sections ready for review",
+        ],
+        pros: [
+          "Captures everything, not just what someone remembers to write",
+          "Flywheel: learns what good intake questions look like over time",
+          "Connects to Guildry's scoping module directly",
+          "High value per call justifies premium pricing",
+        ],
+        cons: [
+          "Meeting integrations are complex",
+          "Privacy concerns, some clients won't want recording",
+          "Depends on call quality and clear discussion",
+        ],
+      },
+      {
+        name: "Post-Call Upload",
+        description: "Upload recordings after the fact for processing",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Upload audio/video from any source",
+          "Same extraction pipeline, no live integration needed",
+          "Works with existing recording workflows",
+          "Can process historical calls to build training data",
+        ],
+        pros: [
+          "Fastest to build, no meeting integrations",
+          "Works with any recording tool or phone call",
+          "Lower privacy friction, user controls what gets uploaded",
+          "Can process backlog of past calls",
+        ],
+        cons: [
+          "Extra step, users might not bother",
+          "No real-time value during the call",
+          "Harder to build habit",
+        ],
+      },
+      {
+        name: "Guided Interview Tool",
+        description: "AI-guided intake form that asks the right questions",
+        buildTime: "1 week",
+        complexity: "Medium",
+        details: [
+          "Send client a link before/after the call",
+          "AI asks clarifying questions based on project type",
+          "Combines with call notes for complete picture",
+          "Generates structured brief automatically",
+        ],
+        pros: [
+          "No recording needed, pure async",
+          "Client does some of the work",
+          "Can use before call to prep, or after to fill gaps",
+          "Reuses Brief's conversation patterns",
+        ],
+        cons: [
+          "Requires client participation",
+          "Doesn't capture the nuance of live conversation",
+          "May feel redundant if call happened",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Agencies will pay $29/mo to turn intake calls into structured SOW drafts automatically",
+      validation: [
+        {
+          phase: "Manual Extraction",
+          duration: "1 week",
+          actions: [
+            "Get 5 intake call recordings from agency contacts",
+            "Manually extract requirements using Claude",
+            "Generate draft SOW sections",
+            "Show output to agencies, gauge reaction",
+          ],
+          successMetric: "Strong positive reaction, 'this would save us hours'",
+        },
+        {
+          phase: "Upload MVP",
+          duration: "1 week",
+          actions: [
+            "Build simple upload and extraction flow",
+            "Partner with 3 agencies for pilot",
+            "Process their real intake calls",
+            "Measure: time saved, quality of extraction",
+          ],
+          successMetric: "2+ hours saved per call, agencies want to keep using it",
+        },
+        {
+          phase: "Pricing + Integration",
+          duration: "2 weeks",
+          actions: [
+            "Add meeting bot integration for one platform",
+            "Propose pricing: $29/mo for 10 calls, $79/mo unlimited",
+            "Connect output to Guildry's project creation",
+            "Track: calls processed, conversion to paid",
+          ],
+          successMetric: "3+ paying agencies, clean handoff to Guildry",
+        },
+      ],
+      killCriteria: [
+        "Extraction quality too inconsistent for real use",
+        "Agencies don't actually process enough calls to justify subscription",
+        "Privacy concerns kill adoption",
+        "Existing transcription tools are 'good enough'",
+      ],
+    },
+  },
+
+  drift: {
+    id: "drift",
+    name: "Drift",
+    tagline: "Contract vs reality monitoring",
+    icon: "📊",
+    color: "#ec4899",
+    description: "AI compares contract terms to actual communication and deliverables. Catch scope creep before it becomes a problem.",
+    thesis: "Contracts say one thing, reality drifts another. Document parsing + email integration can surface mismatches automatically.",
+    problem: `
+Scope creep is a silent killer:
+
+The contract says 5 pages, you're on page 12. The timeline said 6 weeks, you're in month 3. The client asks for "one small change" for the 47th time. By the time you notice, you've already eaten the margin.
+
+Nobody tracks this in real-time because it's tedious. You only realize how bad it got during the post-mortem.
+    `.trim(),
+    approaches: [
+      {
+        name: "Email + Document Monitor (Recommended)",
+        description: "Watch communication channels and flag drift automatically",
+        buildTime: "2-3 weeks",
+        complexity: "High",
+        details: [
+          "Connect email, Slack, and project tools",
+          "Parse original contract/SOW for scope boundaries",
+          "AI monitors communication for scope expansion signals",
+          "Alerts: 'Client requested X which is outside original scope'",
+          "Weekly drift report with quantified impact",
+        ],
+        pros: [
+          "Catches drift as it happens, not after",
+          "Quantifies the problem for client conversations",
+          "Flywheel: learns what 'drift signals' look like across projects",
+          "High value, directly protects margin",
+        ],
+        cons: [
+          "Requires broad data access (email, Slack, docs)",
+          "Privacy and security concerns",
+          "False positives could be annoying",
+          "Complex integration requirements",
+        ],
+      },
+      {
+        name: "Manual Check-In Tool",
+        description: "Periodic scope review with AI assistance",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Upload contract + current deliverables list",
+          "AI compares and highlights mismatches",
+          "Manual trigger, not continuous monitoring",
+          "Generates scope change documentation",
+        ],
+        pros: [
+          "Much simpler to build",
+          "No ongoing integration maintenance",
+          "User controls when to check",
+          "Lower privacy concerns",
+        ],
+        cons: [
+          "Reactive, not proactive",
+          "Depends on user remembering to check",
+          "Misses real-time drift signals",
+        ],
+      },
+      {
+        name: "Time Tracking Integration",
+        description: "Compare hours logged vs hours scoped",
+        buildTime: "1-2 weeks",
+        complexity: "Medium",
+        details: [
+          "Connect to Harvest, Toggl, Clockify, etc.",
+          "Map time entries to contract line items",
+          "Alert when actuals exceed estimates by threshold",
+          "Show burn rate and projected overrun",
+        ],
+        pros: [
+          "Concrete, quantifiable signal",
+          "Time tracking data already exists",
+          "Clear ROI story",
+          "Simpler than full communication monitoring",
+        ],
+        cons: [
+          "Only catches time drift, not scope drift",
+          "Depends on accurate time tracking",
+          "Lagging indicator, damage already done",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Agencies will pay $99/mo to catch scope creep before it kills their margins",
+      validation: [
+        {
+          phase: "Retrospective Analysis",
+          duration: "1 week",
+          actions: [
+            "Get 3 completed projects with known scope creep",
+            "Analyze: contract vs final deliverables vs communication",
+            "Identify: when did drift signals first appear?",
+            "Show agencies: 'here's where you could have caught it'",
+          ],
+          successMetric: "Clear pattern of early warning signals that were missed",
+        },
+        {
+          phase: "Time-Based MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build time tracking integration (Harvest first)",
+            "Compare actuals to contract estimates",
+            "Alert on overruns with context",
+            "Pilot with 3 agencies on active projects",
+          ],
+          successMetric: "At least one 'caught it early' moment per pilot",
+        },
+        {
+          phase: "Full Monitoring Beta",
+          duration: "3 weeks",
+          actions: [
+            "Add email/Slack monitoring for one pilot",
+            "Test drift detection accuracy",
+            "Refine alert thresholds to minimize noise",
+            "Validate $99/mo pricing",
+          ],
+          successMetric: "Pilot agency renews, false positive rate under 20%",
+        },
+      ],
+      killCriteria: [
+        "Agencies don't grant needed data access",
+        "Too many false positives make it noisy",
+        "Drift detection isn't accurate enough to be useful",
+        "Problem isn't painful enough to justify $99/mo",
+      ],
+    },
+  },
+
+  pulse: {
+    id: "pulse",
+    name: "Pulse",
+    tagline: "Auto-generated project status updates",
+    icon: "💓",
+    color: "#f43f5e",
+    description: "AI synthesizes status from Slack, email, and project tools. Generate updates without chasing people.",
+    thesis: "'How's the project going?' requires chasing people. AI can synthesize status from existing communication and tools.",
+    problem: `
+Status updates are broken:
+
+PMs spend hours chasing people for updates. By the time the report is compiled, it's already stale. Nobody reads the 2-page update anyway. Stakeholders just want to know: on track or not?
+
+The information exists. It's in Slack threads, email chains, and ticket comments. It just takes forever to synthesize.
+    `.trim(),
+    approaches: [
+      {
+        name: "Multi-Source Synthesis (Recommended)",
+        description: "Pull from Slack, email, tickets, and time logs to generate status",
+        buildTime: "2-3 weeks",
+        complexity: "High",
+        details: [
+          "Connect Slack, email, Jira/Linear/Asana, time tracking",
+          "AI synthesizes activity into structured status",
+          "Output: what happened, blockers, risks, next steps",
+          "Scheduled delivery (weekly) or on-demand",
+          "Stakeholder-appropriate summaries (exec vs team)",
+        ],
+        pros: [
+          "Eliminates status meeting prep entirely",
+          "Always current, based on real activity",
+          "Flywheel: learns what 'good status' looks like",
+          "Connects naturally to Guildry's project view",
+        ],
+        cons: [
+          "Lots of integrations to build and maintain",
+          "Quality depends on team actually using those tools",
+          "Privacy concerns with broad access",
+          "Synthesis accuracy is critical",
+        ],
+      },
+      {
+        name: "Slack-Only",
+        description: "Generate status from Slack activity in project channels",
+        buildTime: "1 week",
+        complexity: "Medium",
+        details: [
+          "Slack bot watches project channels",
+          "Summarizes: key updates, decisions, blockers mentioned",
+          "Weekly digest or on-demand /pulse command",
+          "Highlights threads that need attention",
+        ],
+        pros: [
+          "Single integration, faster to build",
+          "Many teams already discuss in Slack",
+          "Lower privacy scope",
+          "Can expand to other sources later",
+        ],
+        cons: [
+          "Misses work that happens outside Slack",
+          "Quality depends on Slack communication culture",
+          "Some teams don't use Slack for project work",
+        ],
+      },
+      {
+        name: "Template + AI Fill",
+        description: "AI helps fill standard status template from prompts",
+        buildTime: "3-4 days",
+        complexity: "Low",
+        details: [
+          "Standard status template with sections",
+          "AI prompts user with smart questions",
+          "Suggests content based on last update + time passed",
+          "User reviews and sends",
+        ],
+        pros: [
+          "Fastest to build, no integrations",
+          "Works for any team/tool setup",
+          "User stays in control of content",
+          "Good starting point to learn what works",
+        ],
+        cons: [
+          "Still requires user effort",
+          "Not truly automated",
+          "Doesn't solve the 'chasing people' problem",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "PMs will pay $19/user/mo to generate project status updates automatically",
+      validation: [
+        {
+          phase: "Manual Synthesis",
+          duration: "1 week",
+          actions: [
+            "Get Slack export from 2 active projects",
+            "Manually synthesize weekly status using Claude",
+            "Show to PMs: 'Is this accurate? Would you send this?'",
+            "Understand: what's missing, what's wrong",
+          ],
+          successMetric: "Status is 80%+ accurate, PMs would send with minor edits",
+        },
+        {
+          phase: "Slack Bot MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build Slack bot with /pulse command",
+            "Summarize last 7 days of channel activity",
+            "Test with 5 project channels across 2 teams",
+            "Iterate on summary quality",
+          ],
+          successMetric: "Teams actually use /pulse weekly, find it useful",
+        },
+        {
+          phase: "Multi-Source Beta",
+          duration: "2 weeks",
+          actions: [
+            "Add one more source (Jira or Linear)",
+            "Combine for richer status",
+            "Test scheduled delivery vs on-demand",
+            "Validate pricing at $19/user/mo",
+          ],
+          successMetric: "3+ teams on paid pilot, weekly active usage",
+        },
+      ],
+      killCriteria: [
+        "Synthesis quality too inconsistent",
+        "Teams don't communicate enough in connected tools",
+        "PMs prefer manual control over automated status",
+        "Price sensitivity below $10/user/mo",
+      ],
+    },
+  },
+
+  handoff: {
+    id: "handoff",
+    name: "Handoff",
+    tagline: "Instant project context for new team members",
+    icon: "🤝",
+    color: "#06b6d4",
+    description: "AI generates comprehensive project context docs from all existing materials. New people productive in hours, not days.",
+    thesis: "Onboarding new team members to projects is painful. Document synthesis can generate context from scattered materials instantly.",
+    problem: `
+Onboarding someone to an active project is chaos:
+
+Where's the brief? Which Slack channel? Who's the client contact? What decisions were already made? The new person asks questions for a week. The existing team gets interrupted constantly.
+
+All this information exists somewhere. It's just scattered across 47 places and nobody has time to compile it.
+    `.trim(),
+    approaches: [
+      {
+        name: "Auto-Generated Context Doc (Recommended)",
+        description: "AI compiles project context from all sources into a single doc",
+        buildTime: "2 weeks",
+        complexity: "High",
+        details: [
+          "Pull from: brief, contract, Slack, email, tickets, drive",
+          "Generate: project overview, key people, decisions made, current status",
+          "Include: links to important docs and threads",
+          "Update automatically as project evolves",
+          "Role-specific views (designer vs developer vs PM)",
+        ],
+        pros: [
+          "Massive time saver, measured in days not hours",
+          "Always current, not a stale wiki page",
+          "Flywheel: learns what new team members actually need",
+          "Natural extension of Guildry's project model",
+        ],
+        cons: [
+          "Requires broad data access",
+          "Quality depends on information existing in connected tools",
+          "Complex to get right, lots of edge cases",
+        ],
+      },
+      {
+        name: "Q&A Bot",
+        description: "Chatbot that answers questions about the project",
+        buildTime: "1-2 weeks",
+        complexity: "Medium",
+        details: [
+          "Index all project materials",
+          "New team member asks questions in natural language",
+          "Bot answers with sources and links",
+          "Learns what questions are common",
+        ],
+        pros: [
+          "Interactive, surfaces what's actually needed",
+          "Doesn't require perfect pre-generation",
+          "Can handle edge case questions",
+          "Usage data shows gaps in documentation",
+        ],
+        cons: [
+          "Requires new person to know what to ask",
+          "Doesn't provide proactive overview",
+          "RAG quality can be inconsistent",
+        ],
+      },
+      {
+        name: "Guided Onboarding Flow",
+        description: "Step-by-step onboarding checklist with AI-populated content",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Standard onboarding checklist template",
+          "AI populates with project-specific info",
+          "New person works through steps",
+          "Tracks completion, flags gaps",
+        ],
+        pros: [
+          "Structured, ensures nothing missed",
+          "Simpler to build than full synthesis",
+          "Clear progress visibility",
+          "Can work with partial information",
+        ],
+        cons: [
+          "Less comprehensive than full context doc",
+          "Template might not fit all project types",
+          "Still some manual work required",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Teams will pay $49/mo per project to onboard new members in hours instead of days",
+      validation: [
+        {
+          phase: "Manual Context Doc",
+          duration: "1 week",
+          actions: [
+            "Pick 2 active projects with recent additions",
+            "Manually compile context doc using Claude",
+            "Have new team member review: 'What's missing?'",
+            "Time: how long to create, how much time saved",
+          ],
+          successMetric: "Context doc rated 'very useful', time to productivity cut by 50%+",
+        },
+        {
+          phase: "Automated Generation",
+          duration: "2 weeks",
+          actions: [
+            "Build multi-source context generation",
+            "Test on 3 different project types",
+            "Compare: auto-generated vs manual quality",
+            "Iterate on what to include/exclude",
+          ],
+          successMetric: "Auto-generated docs are 80%+ as good as manual",
+        },
+        {
+          phase: "Live Onboarding Test",
+          duration: "2 weeks",
+          actions: [
+            "Use tool for actual new team member onboarding",
+            "Measure: time to first contribution, questions asked",
+            "Gather feedback from both new person and team",
+            "Validate $49/mo per project pricing",
+          ],
+          successMetric: "Measurable reduction in onboarding time, team wants to keep using",
+        },
+      ],
+      killCriteria: [
+        "Generated context docs are too inaccurate or incomplete",
+        "Teams don't have enough in connected tools to work with",
+        "Problem isn't painful enough (onboarding is 'fine')",
+        "Per-project pricing doesn't work for teams with many projects",
+      ],
+    },
+  },
+
+  terms: {
+    id: "terms",
+    name: "Terms",
+    tagline: "Contract review that catches risks",
+    icon: "📜",
+    color: "#f59e0b",
+    description: "AI highlights unusual terms and compares to your standard templates. Read contracts in minutes, not hours.",
+    thesis: "Reading contracts is tedious and risks get missed. Document comparison can surface unusual terms against your templates.",
+    problem: `
+Nobody actually reads contracts:
+
+You skim, you sign, you hope for the best. That one weird clause about IP assignment? Missed it. The unlimited revisions language? Didn't notice. The payment terms that net 90 instead of 30? Surprise.
+
+Lawyers are expensive. Reading carefully takes forever. So you don't, and sometimes you pay for it.
+    `.trim(),
+    approaches: [
+      {
+        name: "Template Comparison (Recommended)",
+        description: "Compare incoming contracts to your known-good templates",
+        buildTime: "1-2 weeks",
+        complexity: "Medium",
+        details: [
+          "Upload your standard contract templates",
+          "Upload incoming contract for review",
+          "AI highlights: what's different, what's missing, what's risky",
+          "Risk scoring: green/yellow/red by clause",
+          "Suggested negotiation points",
+        ],
+        pros: [
+          "Clear value: compare to what you know is safe",
+          "Builds library of 'your terms' over time",
+          "Fast, review in minutes not hours",
+          "Can flag specific red flags (unlimited revisions, IP traps)",
+        ],
+        cons: [
+          "Need template library to compare against",
+          "Can't catch risks not in your templates",
+          "Legal nuance might be missed",
+        ],
+      },
+      {
+        name: "Risk Pattern Detection",
+        description: "AI trained on common contract risks across industries",
+        buildTime: "2 weeks",
+        complexity: "High",
+        details: [
+          "Pre-trained on common contract pitfalls",
+          "Scans for: payment terms, IP clauses, liability caps, termination",
+          "Industry-specific risk patterns",
+          "No template needed, works standalone",
+        ],
+        pros: [
+          "Works without your templates",
+          "Broader risk coverage",
+          "Can learn from community patterns",
+          "Higher value, more comprehensive",
+        ],
+        cons: [
+          "More complex to build and train",
+          "Generic patterns might miss your specific concerns",
+          "Higher bar for accuracy",
+        ],
+      },
+      {
+        name: "Clause Library",
+        description: "Searchable library of good vs bad clause examples",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Curated examples of risky vs safe clauses",
+          "Search by clause type (IP, payment, termination)",
+          "Side-by-side: what you should push for vs accept",
+          "Community contributed over time",
+        ],
+        pros: [
+          "Simpler to build, curated content",
+          "Educational, helps users learn",
+          "Can be free/freemium entry point",
+          "Builds audience for full product",
+        ],
+        cons: [
+          "Passive, user has to search",
+          "Doesn't analyze their specific contract",
+          "Less immediate value",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Small agencies will pay $29/mo to review contracts 10x faster and catch risks",
+      validation: [
+        {
+          phase: "Manual Comparison",
+          duration: "1 week",
+          actions: [
+            "Get 5 real contracts from agency contacts",
+            "Get their standard templates",
+            "Manually do comparison using Claude",
+            "Show output: 'Would this have helped?'",
+          ],
+          successMetric: "Identify at least 2 risks per contract that user missed",
+        },
+        {
+          phase: "Template MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build upload + comparison flow",
+            "Support 3 contract types (MSA, SOW, NDA)",
+            "Test with 5 agencies on real contracts",
+            "Measure: time saved, risks caught",
+          ],
+          successMetric: "Review time under 10 minutes, risk detection accuracy 80%+",
+        },
+        {
+          phase: "Paid Pilot",
+          duration: "2 weeks",
+          actions: [
+            "Add risk pattern detection",
+            "Launch to waitlist with $29/mo pricing",
+            "Track: contracts reviewed, conversion rate",
+            "Gather feedback on what risks matter most",
+          ],
+          successMetric: "10+ paying users, weekly active usage",
+        },
+      ],
+      killCriteria: [
+        "Risk detection has too many false positives/negatives",
+        "Users don't have standard templates to compare against",
+        "Legal concerns about AI contract advice",
+        "Price sensitivity below $15/mo",
+      ],
+    },
+  },
+
+  forecast: {
+    id: "forecast",
+    name: "Forecast",
+    tagline: "AI-powered revenue forecasting",
+    icon: "📈",
+    color: "#10b981",
+    description: "Predict cash flow from pipeline, project status, and historical close rates. Replace spreadsheet hell.",
+    thesis: "Revenue forecasting is spreadsheet hell. The data already exists in tools, AI can predict cash flow automatically.",
+    problem: `
+Revenue forecasting is a mess:
+
+Half the data is in your CRM, half in spreadsheets, half in someone's head. Close rates are guesses. Project end dates slip. You're surprised when cash gets tight.
+
+Agencies need to know: what's coming in, when, and how confident should we be? The data exists. The synthesis doesn't.
+    `.trim(),
+    approaches: [
+      {
+        name: "Pipeline + Project Integration (Recommended)",
+        description: "Combine CRM pipeline with active project data for full picture",
+        buildTime: "2-3 weeks",
+        complexity: "High",
+        details: [
+          "Connect CRM (HubSpot, Pipedrive) for pipeline",
+          "Connect project tools for active work",
+          "AI adjusts close rates based on historical patterns",
+          "Predict: revenue by month with confidence intervals",
+          "Scenario modeling: what if this deal slips?",
+        ],
+        pros: [
+          "Complete picture: pipeline + in-progress + renewals",
+          "Learns from your actual close rates, not guesses",
+          "Directly actionable for capacity planning",
+          "High value, directly affects business decisions",
+        ],
+        cons: [
+          "Requires clean data in CRM and project tools",
+          "Complex integrations to build",
+          "Accuracy depends on data quality",
+        ],
+      },
+      {
+        name: "Spreadsheet Enhancer",
+        description: "AI layer on top of existing forecasting spreadsheets",
+        buildTime: "1-2 weeks",
+        complexity: "Medium",
+        details: [
+          "Import existing forecast spreadsheet",
+          "AI suggests adjustments based on patterns",
+          "Highlights: overconfident deals, missing renewals",
+          "Generates scenarios automatically",
+          "Export back to spreadsheet or visualize",
+        ],
+        pros: [
+          "Works with existing workflow",
+          "No need to change tools",
+          "Lower adoption friction",
+          "Can show value quickly",
+        ],
+        cons: [
+          "Depends on spreadsheet quality",
+          "Doesn't fix underlying data problems",
+          "Less automated than full integration",
+        ],
+      },
+      {
+        name: "Invoice-Based Projection",
+        description: "Forecast from invoicing patterns and payment history",
+        buildTime: "1 week",
+        complexity: "Medium",
+        details: [
+          "Connect invoicing tool (Stripe, QuickBooks, FreshBooks)",
+          "Analyze: when do clients actually pay?",
+          "Project cash flow based on historical patterns",
+          "Flag: at-risk invoices, slow payers",
+        ],
+        pros: [
+          "Based on actual money, not projections",
+          "Simpler data source",
+          "Clear, concrete output",
+          "Helps with collections too",
+        ],
+        cons: [
+          "Backward-looking, misses new pipeline",
+          "Doesn't help with sales forecasting",
+          "Limited strategic value",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Agency owners will pay $79/mo for accurate revenue forecasting that updates automatically",
+      validation: [
+        {
+          phase: "Historical Analysis",
+          duration: "1 week",
+          actions: [
+            "Get 12 months of actual revenue data from 3 agencies",
+            "Get their forecast spreadsheets from same period",
+            "Compare: how accurate were their forecasts?",
+            "Show: where AI could have improved predictions",
+          ],
+          successMetric: "Demonstrate 20%+ improvement in forecast accuracy",
+        },
+        {
+          phase: "Spreadsheet MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build spreadsheet import and analysis",
+            "Add AI suggestions and scenario modeling",
+            "Test with 3 agencies on current forecasts",
+            "Measure: do suggestions improve accuracy?",
+          ],
+          successMetric: "Users adopt at least 50% of AI suggestions",
+        },
+        {
+          phase: "Integration Beta",
+          duration: "3 weeks",
+          actions: [
+            "Add CRM integration (HubSpot first)",
+            "Automate pipeline to forecast flow",
+            "Test accuracy over 2-week period",
+            "Validate $79/mo pricing",
+          ],
+          successMetric: "Forecast within 15% of actuals, 3+ paying users",
+        },
+      ],
+      killCriteria: [
+        "Forecast accuracy not meaningfully better than spreadsheets",
+        "Agencies don't have clean enough data to work with",
+        "Too much manual work to set up and maintain",
+        "Price sensitivity below $50/mo",
+      ],
+    },
+  },
+
+  audit: {
+    id: "audit",
+    name: "Audit",
+    tagline: "SOW vs deliverables verification",
+    icon: "✅",
+    color: "#14b8a6",
+    description: "AI compares SOW line items to actual deliverables and time logs. Know if you delivered everything promised.",
+    thesis: "'Did we deliver everything in the SOW?' requires manual checking. Cross-document matching can verify automatically.",
+    problem: `
+Project closeout is a mess:
+
+Did we deliver everything in the SOW? Someone has to manually check. What about change orders? Were those completed? Any scope that got dropped? By project end, nobody remembers what was promised.
+
+This matters for renewals, referrals, and not getting burned. But checking is tedious, so it doesn't happen.
+    `.trim(),
+    approaches: [
+      {
+        name: "SOW to Deliverables Matcher (Recommended)",
+        description: "AI compares SOW line items to completed work",
+        buildTime: "2 weeks",
+        complexity: "Medium",
+        details: [
+          "Parse SOW into discrete deliverables",
+          "Connect to file storage, tickets, time logs",
+          "AI matches: what was promised vs what exists",
+          "Report: delivered, missing, modified, added",
+          "Change order tracking built in",
+        ],
+        pros: [
+          "Clear, actionable closeout checklist",
+          "Catches things before final invoice",
+          "Protects against client 'we never got X' claims",
+          "Flywheel: learns what deliverables look like across projects",
+        ],
+        cons: [
+          "Needs clean SOW parsing (messy contracts are hard)",
+          "Deliverable 'matching' is fuzzy",
+          "Requires files/tickets to be organized enough",
+        ],
+      },
+      {
+        name: "Time Log Verification",
+        description: "Compare hours scoped vs hours logged by category",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Parse SOW for hour estimates by category",
+          "Pull actual time from tracking tools",
+          "Report: over/under by category",
+          "Flag categories with no logged time",
+        ],
+        pros: [
+          "Simpler matching (hours are numbers)",
+          "Clear signal for what got attention",
+          "Easy integration with existing time tools",
+          "Can run throughout project, not just at end",
+        ],
+        cons: [
+          "Hours don't equal deliverables",
+          "Time might be logged but work not delivered",
+          "Depends on accurate time categorization",
+        ],
+      },
+      {
+        name: "Client Sign-Off Tool",
+        description: "Structured closeout workflow with client verification",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Generate checklist from SOW",
+          "Client marks each item as received/approved",
+          "Track sign-off status",
+          "Generate acceptance documentation",
+        ],
+        pros: [
+          "Gets client on record confirming delivery",
+          "Clear paper trail",
+          "Simple to build",
+          "Can be part of final invoice flow",
+        ],
+        cons: [
+          "Requires client participation",
+          "Doesn't verify delivery itself",
+          "Manual checklist creation",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Agencies will pay $19/mo to verify project delivery against contracts automatically",
+      validation: [
+        {
+          phase: "Retrospective Audit",
+          duration: "1 week",
+          actions: [
+            "Get 3 recently completed projects with SOW + deliverables",
+            "Manually audit: did delivery match SOW?",
+            "Find gaps: what was missed, what was added",
+            "Show agencies: 'Here's what you might have missed'",
+          ],
+          successMetric: "Find at least one issue per project that wasn't caught",
+        },
+        {
+          phase: "Parser MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build SOW parser for common formats",
+            "Build deliverable matcher (files, tickets)",
+            "Test on 5 real projects",
+            "Measure: matching accuracy, false positives",
+          ],
+          successMetric: "90%+ matching accuracy, useful for real closeout",
+        },
+        {
+          phase: "Workflow Integration",
+          duration: "2 weeks",
+          actions: [
+            "Integrate with Guildry's project completion flow",
+            "Add client sign-off component",
+            "Test full closeout workflow",
+            "Validate $19/mo pricing",
+          ],
+          successMetric: "3+ agencies using for real project closeouts",
+        },
+      ],
+      killCriteria: [
+        "SOW parsing too unreliable for messy contracts",
+        "Deliverable matching has too many false positives",
+        "Agencies don't care enough about formal closeout",
+        "Too much manual work to get value",
+      ],
+    },
+  },
+
+  docs: {
+    id: "docs",
+    name: "Docs",
+    tagline: "Keep internal docs in sync with code",
+    icon: "📚",
+    color: "#0ea5e9",
+    description: "AI watches codebase changes, flags stale docs, and suggests updates. Documentation that stays current.",
+    thesis: "Internal docs are outdated or missing. AI can watch for changes and flag when docs need updates.",
+    problem: `
+Documentation is always out of date:
+
+Someone writes a README. The code changes. The README doesn't. Six months later, new developer follows the docs and everything breaks. "Oh yeah, we don't do it that way anymore."
+
+Nobody has time to update docs. So they rot. And onboarding suffers, bugs happen, knowledge lives only in people's heads.
+    `.trim(),
+    approaches: [
+      {
+        name: "Git Watcher + Flag System (Recommended)",
+        description: "Monitor code changes and flag docs that might be stale",
+        buildTime: "2 weeks",
+        complexity: "Medium",
+        details: [
+          "GitHub/GitLab integration watches commits",
+          "Map docs to code sections they describe",
+          "AI detects: did this change affect related docs?",
+          "Flag docs for review with context",
+          "Suggest specific updates when possible",
+        ],
+        pros: [
+          "Proactive, catches staleness as it happens",
+          "Works with existing doc structure",
+          "Clear action items for doc updates",
+          "Flywheel: learns what changes matter for docs",
+        ],
+        cons: [
+          "Mapping docs to code is imperfect",
+          "May generate false positives",
+          "Requires docs to exist in the first place",
+        ],
+      },
+      {
+        name: "Doc Generator from Code",
+        description: "Auto-generate documentation from codebase",
+        buildTime: "2 weeks",
+        complexity: "High",
+        details: [
+          "Analyze codebase structure and patterns",
+          "Generate: architecture overview, API docs, setup guides",
+          "Keep in sync via regeneration on changes",
+          "Diff-based updates to preserve manual additions",
+        ],
+        pros: [
+          "Docs always match code by definition",
+          "Reduces manual documentation burden",
+          "Consistent format across projects",
+          "Can generate from scratch for undocumented code",
+        ],
+        cons: [
+          "Generated docs often lack context/reasoning",
+          "Quality depends on code quality",
+          "May overwrite valuable manual content",
+        ],
+      },
+      {
+        name: "Knowledge Q&A Layer",
+        description: "Chatbot that answers code questions from docs + code",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Index docs and codebase",
+          "Developers ask questions in natural language",
+          "AI answers with sources",
+          "Track: what questions aren't covered?",
+        ],
+        pros: [
+          "Works even with incomplete docs",
+          "Surfaces what's actually needed",
+          "Lower bar than full doc maintenance",
+          "Shows gaps via unanswered questions",
+        ],
+        cons: [
+          "Doesn't fix underlying doc problem",
+          "RAG quality can be inconsistent",
+          "Developers might not ask",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Dev teams will pay $29/mo to keep docs in sync with code automatically",
+      validation: [
+        {
+          phase: "Staleness Audit",
+          duration: "1 week",
+          actions: [
+            "Audit docs in 3 active repos",
+            "Compare doc content to current code",
+            "Find: what's stale, what's missing",
+            "Estimate: how much time to fix manually",
+          ],
+          successMetric: "Find significant staleness in 3/3 repos",
+        },
+        {
+          phase: "Watcher MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build GitHub integration",
+            "Implement doc-to-code mapping",
+            "Test staleness detection on real repos",
+            "Measure: true positive rate",
+          ],
+          successMetric: "Catch 80%+ of doc-affecting changes with < 20% false positives",
+        },
+        {
+          phase: "Team Beta",
+          duration: "2 weeks",
+          actions: [
+            "Deploy to 3 dev teams",
+            "Integrate with their doc workflow (Notion, Confluence)",
+            "Track: flags generated, flags acted on",
+            "Validate $29/mo pricing",
+          ],
+          successMetric: "Teams act on 50%+ of flags, want to continue",
+        },
+      ],
+      killCriteria: [
+        "Too many false positives make it noisy",
+        "Doc-to-code mapping is too unreliable",
+        "Teams ignore flags, don't value doc currency",
+        "Competitive tools already do this well",
+      ],
+    },
+  },
+
+  onboard: {
+    id: "onboard",
+    name: "Onboard",
+    tagline: "Personalized employee onboarding plans",
+    icon: "🚀",
+    color: "#84cc16",
+    description: "AI generates onboarding plans from role requirements and existing materials. Consistent, personalized onboarding at scale.",
+    thesis: "Employee onboarding is inconsistent. AI can personalize plans based on role while ensuring nothing is missed.",
+    problem: `
+Employee onboarding is chaos:
+
+HR has a checklist. The manager has different expectations. The new hire doesn't know who to ask what. Some people get great onboarding, some get thrown in. It takes months to feel productive.
+
+The information exists. The personalization doesn't. Everyone gets the same generic checklist regardless of role.
+    `.trim(),
+    approaches: [
+      {
+        name: "Role-Based Plan Generator (Recommended)",
+        description: "Generate personalized onboarding from role + company materials",
+        buildTime: "2 weeks",
+        complexity: "Medium",
+        details: [
+          "Input: job description, team info, company docs",
+          "AI generates: week-by-week onboarding plan",
+          "Mix of: company-wide + team-specific + role-specific",
+          "Track progress, surface blockers",
+          "Adapt plan based on new hire feedback",
+        ],
+        pros: [
+          "Personalized without manual work",
+          "Consistent baseline with role customization",
+          "Measurable: track onboarding metrics",
+          "Flywheel: learns what makes good onboarding",
+        ],
+        cons: [
+          "Quality depends on source materials",
+          "Role-specific content needs to exist",
+          "May miss company culture nuances",
+        ],
+      },
+      {
+        name: "Buddy + AI Assist",
+        description: "AI supports assigned onboarding buddy",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Buddy assigned as usual",
+          "AI provides: suggested topics, reminders, check-in prompts",
+          "New hire can ask AI questions first",
+          "Escalate to buddy when AI can't help",
+        ],
+        pros: [
+          "Keeps human connection central",
+          "Reduces buddy burden",
+          "AI handles repetitive questions",
+          "Works alongside existing programs",
+        ],
+        cons: [
+          "Still depends on buddy quality",
+          "Doesn't fix broken programs",
+          "Limited impact compared to full solution",
+        ],
+      },
+      {
+        name: "Self-Service Knowledge Base",
+        description: "Searchable onboarding knowledge base with AI chat",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Centralize all onboarding materials",
+          "AI chat for questions",
+          "Suggested reading paths by role",
+          "Track: what do people search for?",
+        ],
+        pros: [
+          "New hires can self-serve",
+          "Scales without adding headcount",
+          "Shows gaps via search patterns",
+          "Foundation for more advanced features",
+        ],
+        cons: [
+          "Passive, requires self-motivation",
+          "Doesn't replace structured program",
+          "Knowledge base must be created first",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Companies will pay $99/mo for AI-generated personalized onboarding plans",
+      validation: [
+        {
+          phase: "Manual Plan Generation",
+          duration: "1 week",
+          actions: [
+            "Get job descriptions and onboarding materials from 2 companies",
+            "Manually generate personalized plans using Claude",
+            "Compare to their existing onboarding",
+            "Get feedback: better, worse, what's missing?",
+          ],
+          successMetric: "Generated plans rated better than existing",
+        },
+        {
+          phase: "Generator MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build role-based plan generator",
+            "Support 3 common role types",
+            "Test with 5 upcoming hires across 2 companies",
+            "Gather feedback from new hires and managers",
+          ],
+          successMetric: "New hires and managers prefer generated plans",
+        },
+        {
+          phase: "Full Program Pilot",
+          duration: "4 weeks",
+          actions: [
+            "Run full onboarding program for 10 new hires",
+            "Track: time to productivity, satisfaction scores",
+            "Compare to control group with standard onboarding",
+            "Validate $99/mo pricing",
+          ],
+          successMetric: "Measurable improvement in time to productivity",
+        },
+      ],
+      killCriteria: [
+        "Generated plans are too generic to be useful",
+        "Companies don't have source materials to work with",
+        "New hires prefer human-led onboarding regardless",
+        "Too hard to measure ROI",
+      ],
+    },
+  },
+
+  standup: {
+    id: "standup",
+    name: "Standup",
+    tagline: "Async standups without the noise",
+    icon: "🗣️",
+    color: "#eab308",
+    description: "AI synthesizes team updates, surfaces blockers, and skips the noise. Get signal without the meeting.",
+    thesis: "Async standups are noisy or ignored. AI can synthesize updates and surface only what matters.",
+    problem: `
+Daily standups are broken:
+
+Sync standups interrupt deep work. Async standups become walls of text nobody reads. Blockers get buried. Half the team doesn't update consistently.
+
+You want to know: what's happening, who's stuck, what needs attention? You don't want to read 15 updates to find one blocker.
+    `.trim(),
+    approaches: [
+      {
+        name: "Smart Digest (Recommended)",
+        description: "AI synthesizes async updates into actionable digest",
+        buildTime: "1-2 weeks",
+        complexity: "Medium",
+        details: [
+          "Team submits updates (Slack, form, or bot prompt)",
+          "AI synthesizes: key progress, blockers, attention needed",
+          "Personalized digest: show me what I care about",
+          "Highlight: related work, dependencies, conflicts",
+          "Skip the noise, surface the signal",
+        ],
+        pros: [
+          "Solves the 'wall of text' problem",
+          "Personalized, everyone sees what matters to them",
+          "Catches blockers and dependencies automatically",
+          "Flywheel: learns what's important per team",
+        ],
+        cons: [
+          "Still requires people to submit updates",
+          "Synthesis quality depends on update quality",
+          "May miss nuance in brief updates",
+        ],
+      },
+      {
+        name: "Activity-Based Status",
+        description: "Generate status from tool activity, no manual input",
+        buildTime: "2 weeks",
+        complexity: "High",
+        details: [
+          "Connect: GitHub, Jira, Slack, Calendar",
+          "AI infers: what did each person work on?",
+          "Synthesize into team digest",
+          "Highlight: stalled work, missing activity",
+        ],
+        pros: [
+          "Zero input required from team",
+          "Based on actual work, not self-reports",
+          "Catches silent blockers (no activity = problem)",
+          "More accurate than manual updates",
+        ],
+        cons: [
+          "Lots of integrations to build",
+          "May feel like surveillance",
+          "Misses work not in connected tools",
+        ],
+      },
+      {
+        name: "Intelligent Prompts",
+        description: "AI asks better standup questions based on context",
+        buildTime: "1 week",
+        complexity: "Low",
+        details: [
+          "Instead of generic 'what did you do?'",
+          "AI asks: 'How's the payment integration going?'",
+          "Based on: tickets assigned, recent commits, calendar",
+          "Gets more useful updates with less effort",
+        ],
+        pros: [
+          "Better input = better output",
+          "Shows team their work is visible",
+          "Reduces cognitive load of 'what should I report?'",
+          "Works with existing standup tools",
+        ],
+        cons: [
+          "Still requires manual response",
+          "Prompt quality depends on data access",
+          "Incremental improvement, not transformation",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Teams will pay $8/user/mo for AI-synthesized async standups that surface blockers",
+      validation: [
+        {
+          phase: "Manual Synthesis",
+          duration: "1 week",
+          actions: [
+            "Get 5 days of async standup updates from 2 teams",
+            "Manually synthesize into daily digests using Claude",
+            "Show to team leads: 'Is this useful?'",
+            "Compare: time to read digest vs all updates",
+          ],
+          successMetric: "Digest preferred over reading all updates, catches blockers",
+        },
+        {
+          phase: "Slack Bot MVP",
+          duration: "2 weeks",
+          actions: [
+            "Build Slack bot for standup collection",
+            "Auto-synthesize into digest",
+            "Test with 3 teams for 2 weeks",
+            "Measure: engagement, blocker detection, usefulness",
+          ],
+          successMetric: "80%+ update rate, leads find digests actionable",
+        },
+        {
+          phase: "Full Product Launch",
+          duration: "2 weeks",
+          actions: [
+            "Add personalization (what I care about)",
+            "Add activity-based signals",
+            "Launch publicly with $8/user/mo pricing",
+            "Track: signup, retention, feature usage",
+          ],
+          successMetric: "50+ users, 70%+ weekly retention",
+        },
+      ],
+      killCriteria: [
+        "Teams don't submit updates consistently",
+        "Synthesis misses important blockers",
+        "Digest becomes another thing to ignore",
+        "Competitive tools already do this well",
+      ],
+    },
+  },
 };
 
 function ApproachCard({ approach, index, color }) {
