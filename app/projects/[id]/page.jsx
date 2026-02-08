@@ -5,6 +5,144 @@ import Link from "next/link";
 
 // Project detail data with approaches and test plans
 const PROJECT_DETAILS = {
+  guildry: {
+    id: "guildry",
+    name: "Guildry",
+    tagline: "Project intelligence for agencies",
+    icon: "📐",
+    color: "#0d9488",
+    description: "Scope, staff, deliver, and learn from every project. A system that gets smarter with each project you close.",
+    thesis: "Services firms have years of project data but no way to learn from it. LLMs can now extract patterns from unstructured history and use them to improve future estimates.",
+    problem: `
+Agency project management is broken:
+
+Scoping is guesswork. You pull numbers from memory or copy the last similar project. When you're wrong, you eat the margin or burn the client relationship.
+
+Staffing is reactive. You don't know who's available until they're already overbooked. Skills and preferences live in spreadsheets or people's heads.
+
+Learnings disappear. Every retro generates insights that get filed and forgotten. The same mistakes repeat across projects, teams, even years.
+
+The data exists. It's in old SOWs, time logs, retro notes, Slack threads. But nobody has time to mine it, so each project starts from scratch.
+    `.trim(),
+    approaches: [
+      {
+        name: "Modular Suite (Current)",
+        description: "Three focused tools that work independently but share data",
+        buildTime: "3-4 weeks total",
+        complexity: "Medium",
+        details: [
+          "Blueprint: AI-assisted scoping from conversation and historical patterns",
+          "Bench: Skills database with availability and preference tracking",
+          "Retro: Structured post-mortems that feed back into scoping",
+          "Shared data layer lets each module improve the others",
+          "Can launch modules separately to test value",
+        ],
+        pros: [
+          "Each module can stand alone if others don't work",
+          "Faster time to first value",
+          "Clear upgrade path as modules prove out",
+          "Matches how agencies actually buy software",
+        ],
+        cons: [
+          "Integration complexity across modules",
+          "Users might not see the full vision from one piece",
+          "Need to nail onboarding for each module",
+        ],
+      },
+      {
+        name: "Full Platform",
+        description: "Integrated project lifecycle tool from intake to retro",
+        buildTime: "6-8 weeks",
+        complexity: "High",
+        details: [
+          "Single application covering entire project lifecycle",
+          "Tighter integration between phases",
+          "Unified data model from the start",
+          "More coherent user experience",
+        ],
+        pros: [
+          "Stronger product story",
+          "Deeper data integration",
+          "Higher switching cost once adopted",
+          "Clearer competitive moat",
+        ],
+        cons: [
+          "Much longer to first feedback",
+          "Harder to pivot if assumptions wrong",
+          "Bigger lift for agencies to adopt",
+          "More features to maintain",
+        ],
+      },
+      {
+        name: "Retro-First",
+        description: "Start with retrospectives, expand backward into planning",
+        buildTime: "2 weeks",
+        complexity: "Low",
+        details: [
+          "Focus entirely on capturing project learnings",
+          "AI extracts patterns from retro data",
+          "Use patterns to inform future scoping (manual at first)",
+          "Add scoping and staffing as retro data accumulates",
+        ],
+        pros: [
+          "Fastest to value",
+          "Low commitment ask for agencies",
+          "Data flywheel starts immediately",
+          "Clear proof point for AI value",
+        ],
+        cons: [
+          "Requires completed projects to generate data",
+          "Delayed path to scoping (the bigger pain point)",
+          "May feel like 'just another retro tool'",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Agencies will pay $199/mo for AI-powered scoping that learns from their project history",
+      validation: [
+        {
+          phase: "Module Launch",
+          duration: "2-3 weeks",
+          actions: [
+            "Ship Blueprint, Bench, and Retro as working tools",
+            "Onboard 3 pilot agencies for real project scoping",
+            "Track: time to create scope, accuracy vs final",
+            "Gather feedback on AI suggestions",
+          ],
+          successMetric: "Agencies complete 5+ real scopes, find AI suggestions useful",
+        },
+        {
+          phase: "Data Flywheel",
+          duration: "4-6 weeks",
+          actions: [
+            "Pilot agencies run 2-3 projects through full cycle",
+            "Retro data starts feeding Blueprint suggestions",
+            "Measure: do scopes improve with more data?",
+            "Document case studies from pilot results",
+          ],
+          successMetric: "Visible improvement in scope accuracy over time",
+        },
+        {
+          phase: "Pricing Validation",
+          duration: "2 weeks",
+          actions: [
+            "Propose $199/mo to pilot agencies",
+            "Gauge reaction, test price sensitivity",
+            "Create public landing page and waitlist",
+            "Run targeted outreach to agency networks",
+          ],
+          successMetric: "2/3 pilots convert to paid, 50+ waitlist signups",
+        },
+      ],
+      killCriteria: [
+        "AI suggestions aren't meaningfully better than gut feel",
+        "Agencies won't enter historical data to train the model",
+        "Onboarding friction is too high for busy agencies",
+        "Price sensitivity below $99/mo makes unit economics impossible",
+      ],
+    },
+  },
+
   "smart-cms": {
     id: "smart-cms",
     name: "Smart CMS",

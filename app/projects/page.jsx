@@ -4,7 +4,7 @@ import Link from "next/link";
 
 // Projects with detail pages
 const PROJECTS_WITH_DETAILS = [
-  "smart-cms", "changelog", "brief", "recap",
+  "guildry", "smart-cms", "changelog", "brief", "recap",
   "intake", "drift", "pulse", "handoff",
   "terms", "forecast", "audit",
   "docs", "onboard", "standup"
@@ -252,9 +252,15 @@ const STATUS_LABELS = {
 
 function ProjectCard({ project }) {
   const status = STATUS_LABELS[project.status];
+  const hasDetail = PROJECTS_WITH_DETAILS.includes(project.id);
+
+  const CardWrapper = hasDetail ? Link : "div";
+  const wrapperProps = hasDetail
+    ? { href: `/projects/${project.id}`, className: "rounded-xl border-2 overflow-hidden block no-underline hover:shadow-lg transition-shadow cursor-pointer" }
+    : { className: "rounded-xl border-2 overflow-hidden" };
 
   return (
-    <div className="rounded-xl border-2 overflow-hidden" style={{ borderColor: `${project.color}40` }}>
+    <CardWrapper {...wrapperProps} style={{ borderColor: `${project.color}40` }}>
       {/* Header */}
       <div className="p-5 border-b" style={{ backgroundColor: `${project.color}08`, borderColor: `${project.color}20` }}>
         <div className="flex items-start justify-between mb-3">
@@ -339,9 +345,12 @@ function ProjectCard({ project }) {
         {/* Meta */}
         <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
           <span className="font-mono text-[10px] text-slate-400">Started {project.started}</span>
+          {hasDetail && (
+            <span className="font-mono text-[10px] text-slate-400">View details →</span>
+          )}
         </div>
       </div>
-    </div>
+    </CardWrapper>
   );
 }
 
