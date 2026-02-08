@@ -20,25 +20,31 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white">
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-b border-sky-100">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-semibold text-slate-900 no-underline tracking-tight">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+          <Link href="/" className="font-semibold text-slate-900 no-underline tracking-tight text-sm sm:text-base">
             the ai ethos
           </Link>
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 sm:gap-8">
             {NAV_LINKS.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-slate-500 hover:text-slate-900 no-underline transition-colors"
+                className="text-xs sm:text-sm text-slate-500 hover:text-slate-900 no-underline transition-colors hidden sm:block"
               >
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="/projects"
+              className="text-xs sm:text-sm text-slate-500 hover:text-slate-900 no-underline transition-colors sm:hidden"
+            >
+              Projects
+            </Link>
             <a
               href="https://guildry.paulb.pro"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium px-4 py-2 rounded-full bg-sky-500 text-white no-underline hover:bg-sky-600 transition-colors shadow-sm shadow-sky-200"
+              className="text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-sky-500 text-white no-underline hover:bg-sky-600 transition-colors shadow-sm shadow-sky-200"
             >
               Guildry ↗
             </a>
@@ -47,7 +53,7 @@ export default function HomePage() {
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-sky-100/80 to-transparent rounded-full blur-3xl" />
@@ -73,7 +79,7 @@ export default function HomePage() {
               <span className="text-gradient">Learn faster.</span>
             </h1>
 
-            <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-slate-600 mb-8 sm:mb-10 leading-relaxed max-w-2xl mx-auto px-2">
               A one-person AI product incubator. Build tools that solve real problems,
               kill what doesn't work, double down on what does.
             </p>
@@ -101,18 +107,18 @@ export default function HomePage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative py-12 border-y border-sky-100 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-4 gap-8">
+      <section className="relative py-8 sm:py-12 border-y border-sky-100 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
             {STATS.map((stat, i) => (
               <div key={i} className="text-center">
                 <div
-                  className="text-4xl font-bold mb-1"
+                  className="text-3xl sm:text-4xl font-bold mb-1"
                   style={{ color: stat.value > 0 ? stat.color : '#cbd5e1' }}
                 >
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-500">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-slate-500">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -120,11 +126,11 @@ export default function HomePage() {
       </section>
 
       {/* Active Project */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-3">Currently Building</h2>
-            <p className="text-slate-600">What's getting attention right now</p>
+      <section className="py-12 sm:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 sm:mb-3">Currently Building</h2>
+            <p className="text-sm sm:text-base text-slate-600">What's getting attention right now</p>
           </div>
 
           {/* Guildry Card */}
@@ -133,28 +139,28 @@ export default function HomePage() {
               {/* Glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-blue-500 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity" />
 
-              <div className="relative bg-white rounded-2xl border border-sky-200 p-8 shadow-xl shadow-sky-100/50">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-2xl shadow-lg shadow-sky-200">
+              <div className="relative bg-white rounded-2xl border border-sky-200 p-5 sm:p-8 shadow-xl shadow-sky-100/50">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4 sm:mb-6">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-xl sm:text-2xl shadow-lg shadow-sky-200 flex-shrink-0">
                       📐
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-900">Guildry</h3>
-                      <p className="text-slate-500">Project intelligence for agencies</p>
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Guildry</h3>
+                      <p className="text-sm sm:text-base text-slate-500">Project intelligence for agencies</p>
                     </div>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 border border-sky-200">
+                  <span className="self-start px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 border border-sky-200 whitespace-nowrap">
                     In Progress
                   </span>
                 </div>
 
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-600 mb-5 sm:mb-6 leading-relaxed">
                   Scope, staff, deliver, and learn from every project. A system that gets smarter
                   with each project you close.
                 </p>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     href="/projects/guildry"
                     className="flex-1 text-center px-5 py-3 rounded-xl text-sm font-semibold no-underline bg-slate-900 text-white hover:bg-slate-800 transition-colors"
@@ -177,14 +183,14 @@ export default function HomePage() {
       </section>
 
       {/* Pipeline Preview */}
-      <section className="py-20 bg-gradient-to-b from-white to-sky-50">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-3">The Pipeline</h2>
-            <p className="text-slate-600">14 ideas in evaluation, ready to test</p>
+      <section className="py-12 sm:py-20 bg-gradient-to-b from-white to-sky-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 sm:mb-3">The Pipeline</h2>
+            <p className="text-sm sm:text-base text-slate-600">14 ideas in evaluation, ready to test</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
             {[
               { icon: "🌐", name: "Smart CMS", desc: "Site migration" },
               { icon: "📋", name: "Changelog", desc: "Auto changelogs" },
@@ -194,11 +200,11 @@ export default function HomePage() {
               <Link
                 key={i}
                 href={`/projects/${project.name.toLowerCase().replace(' ', '-')}`}
-                className="group p-5 rounded-xl bg-white border border-slate-200 no-underline hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100/50 transition-all"
+                className="group p-4 sm:p-5 rounded-xl bg-white border border-slate-200 no-underline hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100/50 transition-all"
               >
-                <div className="text-2xl mb-2">{project.icon}</div>
-                <div className="font-semibold text-slate-900 group-hover:text-sky-600 transition-colors">{project.name}</div>
-                <div className="text-sm text-slate-500">{project.desc}</div>
+                <div className="text-xl sm:text-2xl mb-2">{project.icon}</div>
+                <div className="font-semibold text-sm sm:text-base text-slate-900 group-hover:text-sky-600 transition-colors">{project.name}</div>
+                <div className="text-xs sm:text-sm text-slate-500">{project.desc}</div>
               </Link>
             ))}
           </div>
@@ -218,9 +224,9 @@ export default function HomePage() {
       </section>
 
       {/* Quick Links */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section className="py-12 sm:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {[
               { href: "/methodology", icon: "⚙️", title: "Methodology", desc: "Frameworks for evaluating, building, and killing projects" },
               { href: "/log", icon: "📓", title: "Log", desc: "Decisions, learnings, and notes from the journey" },
@@ -229,13 +235,13 @@ export default function HomePage() {
               <Link
                 key={i}
                 href={link.href}
-                className="group p-6 rounded-2xl bg-white border border-slate-200 no-underline hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/50 transition-all"
+                className="group p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 no-underline hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/50 transition-all"
               >
-                <div className="text-3xl mb-4">{link.icon}</div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">{link.icon}</div>
+                <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-1 sm:mb-2 group-hover:text-sky-600 transition-colors">
                   {link.title}
                 </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{link.desc}</p>
+                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">{link.desc}</p>
               </Link>
             ))}
           </div>
@@ -243,14 +249,14 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-sky-100 bg-sky-50/50">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="flex items-center justify-between">
+      <footer className="py-8 sm:py-12 border-t border-sky-100 bg-sky-50/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <div className="font-semibold text-slate-900 mb-1">theaiethos.com</div>
-              <div className="text-sm text-slate-500">Solo AI Product Incubator</div>
+              <div className="font-semibold text-slate-900 mb-1 text-sm sm:text-base">theaiethos.com</div>
+              <div className="text-xs sm:text-sm text-slate-500">Solo AI Product Incubator</div>
             </div>
-            <div className="text-sm text-slate-400">Feb 2026</div>
+            <div className="text-xs sm:text-sm text-slate-400">Feb 2026</div>
           </div>
         </div>
       </footer>
