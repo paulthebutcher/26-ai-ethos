@@ -143,6 +143,141 @@ The data exists. It's in old SOWs, time logs, retro notes, Slack threads. But no
     },
   },
 
+  launchpad: {
+    id: "launchpad",
+    name: "Launchpad",
+    tagline: "Validate ideas with landing pages",
+    icon: "🚀",
+    color: "#3b82f6",
+    description: "Generate polished landing pages for each product idea. Collect waitlist signups as keep/kill signals. Ship, test, learn, repeat.",
+    thesis: "Idea validation needs real signal from real people. Landing pages with waitlist forms measure interest before building. Fast iteration beats perfect planning.",
+    problem: `
+Validating product ideas is slow and expensive:
+
+Building MVPs takes weeks or months. By the time you have something to show, you've already committed significant resources. If the idea doesn't resonate, you've wasted time that could have validated something else.
+
+Surveys and interviews are biased. People say they want things they'll never pay for. The gap between stated interest and actual behavior is huge.
+
+There's no middle ground. Either you build the whole thing or you're guessing. What's missing is a cheap, fast way to measure real interest before committing.
+
+Email signups are an honest signal. Getting someone to give you their email for a waitlist takes 30 seconds but indicates real intent. If people won't even sign up, they definitely won't pay.
+    `.trim(),
+    approaches: [
+      {
+        name: "Template System (Current)",
+        description: "Data-driven landing pages with shared components and individual configs",
+        buildTime: "1 day",
+        complexity: "Low",
+        details: [
+          "Single template component renders any landing page from data",
+          "Each project gets a config object: headline, features, problem, solution",
+          "Resend integration sends welcome emails and tracks signups",
+          "Unique color scheme per project for brand differentiation",
+          "All pages share nav, footer, and waitlist form logic",
+        ],
+        pros: [
+          "New landing pages in minutes, just add data",
+          "Consistent quality across all pages",
+          "Easy A/B testing by swapping configs",
+          "Single codebase to maintain",
+        ],
+        cons: [
+          "Less flexibility for unique page layouts",
+          "All pages have same structure",
+          "Custom sections require template changes",
+        ],
+      },
+      {
+        name: "AI Generation",
+        description: "Generate landing page content from project thesis using AI",
+        buildTime: "2 weeks",
+        complexity: "Medium",
+        details: [
+          "Feed project thesis into Claude to generate headlines, features, etc.",
+          "Auto-generate problem/solution sections from description",
+          "Suggest color schemes based on project category",
+          "Human review before publish",
+        ],
+        pros: [
+          "Even faster page creation",
+          "Consistent messaging quality",
+          "Could generate variations for testing",
+        ],
+        cons: [
+          "Adds dependency on AI quality",
+          "May lose nuance from manual copywriting",
+          "Still needs human review",
+        ],
+      },
+      {
+        name: "Visual Builder",
+        description: "Drag-and-drop builder for custom landing pages",
+        buildTime: "4 weeks",
+        complexity: "High",
+        details: [
+          "Component library: heroes, features, testimonials, CTAs",
+          "WYSIWYG editing for each page",
+          "Save as config for version control",
+          "More flexibility per page",
+        ],
+        pros: [
+          "Maximum flexibility",
+          "Non-technical users can edit",
+          "Each page can be unique",
+        ],
+        cons: [
+          "Much longer build time",
+          "Maintenance overhead",
+          "Overkill for current needs",
+        ],
+      },
+    ],
+    testPlan: {
+      hypothesis: "Landing pages with waitlist signups will generate enough signal to make keep/kill decisions in 2 weeks",
+      validation: [
+        {
+          phase: "Launch All Pages",
+          duration: "1 day",
+          actions: [
+            "Deploy landing pages for all 9 evaluating projects",
+            "Configure Resend for email collection",
+            "Set up basic analytics (page views, signup rate)",
+            "Share pages on relevant channels",
+          ],
+          successMetric: "All pages live and collecting signups",
+        },
+        {
+          phase: "Traffic Experiment",
+          duration: "2 weeks",
+          actions: [
+            "Drive traffic to pages via Twitter, Reddit, LinkedIn",
+            "Test different messaging for same products",
+            "Track: visits, signup rate, email open rate",
+            "Identify top 2-3 performers",
+          ],
+          successMetric: "Clear signal on which ideas resonate (10+ signups vs <2)",
+        },
+        {
+          phase: "Signal Analysis",
+          duration: "1 week",
+          actions: [
+            "Rank projects by signup rate and volume",
+            "Survey waitlist for deeper interest validation",
+            "Kill projects with <2 signups after 2 weeks",
+            "Prioritize building top performers",
+          ],
+          successMetric: "At least one project gets 20+ signups, ready to build",
+        },
+      ],
+      killCriteria: [
+        "Zero projects get >5 signups after 2 weeks of promotion",
+        "Signup-to-survey response rate below 10%",
+        "Traffic acquisition cost makes testing unsustainable",
+        "No clear winner emerges, all projects have similar low interest",
+      ],
+    },
+  },
+
   "smart-cms": {
     id: "smart-cms",
     name: "Smart CMS",

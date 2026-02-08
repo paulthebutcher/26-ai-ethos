@@ -3,10 +3,10 @@
 import Link from "next/link";
 
 const STATS = [
-  { value: 1, label: "Building", color: "#0ea5e9" },
-  { value: 14, label: "Evaluating", color: "#6366f1" },
+  { value: 2, label: "Building", color: "#0ea5e9" },
+  { value: 9, label: "Evaluating", color: "#6366f1" },
   { value: 0, label: "Shipped", color: "#22c55e" },
-  { value: 0, label: "Killed", color: "#ef4444" },
+  { value: 5, label: "Killed", color: "#ef4444" },
 ];
 
 const NAV_LINKS = [
@@ -69,7 +69,7 @@ export default function HomePage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
               </span>
-              <span className="text-sm text-slate-600">Building Guildry</span>
+              <span className="text-sm text-slate-600">Building Guildry + Launchpad</span>
             </div>
 
             {/* Headline */}
@@ -187,7 +187,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 sm:mb-3">The Pipeline</h2>
-            <p className="text-sm sm:text-base text-slate-600">14 ideas in evaluation, ready to test</p>
+            <p className="text-sm sm:text-base text-slate-600">9 ideas in evaluation, ready to test</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
@@ -195,7 +195,7 @@ export default function HomePage() {
               { icon: "🌐", name: "Smart CMS", desc: "Site migration" },
               { icon: "📋", name: "Changelog", desc: "Auto changelogs" },
               { icon: "🎨", name: "Brief", desc: "Creative briefs" },
-              { icon: "📝", name: "Recap", desc: "Meeting notes" },
+              { icon: "🎙️", name: "Intake", desc: "Client discovery" },
             ].map((project, i) => (
               <Link
                 key={i}
@@ -214,7 +214,7 @@ export default function HomePage() {
               href="/projects"
               className="inline-flex items-center gap-2 text-sm font-medium text-sky-600 hover:text-sky-700 no-underline"
             >
-              View all 14 projects
+              View all projects
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
