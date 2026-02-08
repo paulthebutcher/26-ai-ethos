@@ -3,6 +3,68 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
+// Product synergies - which products work well together
+const SYNERGIES = {
+  guildry: [
+    { id: "intake", reason: "Intake feeds structured requirements into Guildry's scoping engine" },
+    { id: "forecast", reason: "Guildry's project data powers Forecast's prediction models" },
+    { id: "audit", reason: "Audit insights feed back into Guildry to improve future estimates" },
+  ],
+  launchpad: [
+    { id: "smart-cms", reason: "Landing pages can be built on the same infrastructure" },
+  ],
+  "smart-cms": [
+    { id: "launchpad", reason: "Share hosting and deployment infrastructure" },
+    { id: "changelog", reason: "Both serve developer and agency audiences" },
+  ],
+  intake: [
+    { id: "guildry", reason: "Captured requirements flow directly into project scoping" },
+    { id: "brief", reason: "Both extract structure from unstructured conversations" },
+    { id: "drift", reason: "Intake captures initial scope that Drift monitors against" },
+  ],
+  brief: [
+    { id: "intake", reason: "Both solve the 'vague requirements' problem from different angles" },
+  ],
+  drift: [
+    { id: "intake", reason: "Uses Intake's captured scope as the baseline for drift detection" },
+    { id: "terms", reason: "Terms creates contracts, Drift monitors compliance" },
+  ],
+  handoff: [
+    { id: "audit", reason: "Both focus on project completion and knowledge transfer" },
+    { id: "guildry", reason: "Handoff packages can include Guildry project summaries" },
+  ],
+  terms: [
+    { id: "drift", reason: "Drift monitors the contracts Terms helps create" },
+  ],
+  forecast: [
+    { id: "guildry", reason: "Learns from Guildry's historical project data" },
+    { id: "audit", reason: "Audit findings improve Forecast's accuracy over time" },
+  ],
+  audit: [
+    { id: "guildry", reason: "Audit insights improve Guildry's scoping recommendations" },
+    { id: "forecast", reason: "Post-project analysis improves prediction accuracy" },
+    { id: "handoff", reason: "Both close out projects and capture learnings" },
+  ],
+  changelog: [
+    { id: "smart-cms", reason: "Both serve technical audiences with dev tools" },
+  ],
+};
+
+// Quick lookup for project names and icons
+const PROJECT_META = {
+  guildry: { name: "Guildry", icon: "📐" },
+  launchpad: { name: "Launchpad", icon: "🚀" },
+  "smart-cms": { name: "Smart CMS", icon: "🌐" },
+  intake: { name: "Intake", icon: "🎙️" },
+  brief: { name: "Brief", icon: "🎨" },
+  drift: { name: "Drift", icon: "📊" },
+  handoff: { name: "Handoff", icon: "🤝" },
+  terms: { name: "Terms", icon: "📜" },
+  forecast: { name: "Forecast", icon: "📈" },
+  audit: { name: "Audit", icon: "🔍" },
+  changelog: { name: "Changelog", icon: "📋" },
+};
+
 // Project detail data with approaches and test plans
 const PROJECT_DETAILS = {
   guildry: {
@@ -2341,6 +2403,28 @@ export default function ProjectDetailPage() {
             <p className="text-lg text-slate-600 m-0">{project.tagline}</p>
           </div>
         </div>
+
+        {/* Quick Links */}
+        <div className="flex flex-wrap gap-3">
+          {["smart-cms", "changelog", "brief", "intake", "drift", "handoff", "terms", "forecast", "audit"].includes(params.id) && (
+            <Link
+              href={`/landing/${params.id}`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium no-underline bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors"
+            >
+              <span>📄</span> View Landing Page
+            </Link>
+          )}
+          {project.id === "guildry" && (
+            <a
+              href="https://guildry.paulb.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium no-underline bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 transition-colors"
+            >
+              <span>↗</span> Open App
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Thesis & Problem */}
@@ -2444,6 +2528,38 @@ export default function ProjectDetailPage() {
           </ul>
         </div>
       </section>
+
+      {/* Works Well With */}
+      {SYNERGIES[project.id] && SYNERGIES[project.id].length > 0 && (
+        <section className="mb-12">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
+            Works Well With
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {SYNERGIES[project.id].map((synergy) => {
+              const meta = PROJECT_META[synergy.id];
+              return (
+                <Link
+                  key={synergy.id}
+                  href={`/projects/${synergy.id}`}
+                  className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-md transition-all no-underline group"
+                >
+                  <span className="text-2xl">{meta?.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                      {meta?.name}
+                    </div>
+                    <p className="text-xs text-slate-500 m-0 leading-relaxed">
+                      {synergy.reason}
+                    </p>
+                  </div>
+                  <span className="text-slate-400 group-hover:text-indigo-400 transition-colors">→</span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="mt-20 pt-8 border-t border-slate-200 flex justify-between items-center">

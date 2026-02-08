@@ -9,6 +9,12 @@ const PROJECTS_WITH_DETAILS = [
   "terms", "forecast", "audit"
 ];
 
+// Projects with public landing pages (for waitlist collection)
+const PROJECTS_WITH_LANDING = [
+  "smart-cms", "changelog", "brief", "intake", "drift",
+  "handoff", "terms", "forecast", "audit"
+];
+
 const PROJECTS = [
   // === IN PROGRESS ===
   {
@@ -272,6 +278,7 @@ const STATUS_LABELS = {
 function ProjectCard({ project }) {
   const status = STATUS_LABELS[project.status];
   const hasDetail = PROJECTS_WITH_DETAILS.includes(project.id);
+  const hasLanding = PROJECTS_WITH_LANDING.includes(project.id);
 
   const CardWrapper = hasDetail ? Link : "div";
   const wrapperProps = hasDetail
@@ -333,6 +340,14 @@ function ProjectCard({ project }) {
               GitHub
             </a>
           )}
+          {hasLanding && (
+            <Link
+              href={`/landing/${project.id}`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium no-underline transition-all border border-indigo-200 bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
+            >
+              <span>📄</span> Landing Page
+            </Link>
+          )}
         </div>
       </div>
 
@@ -385,6 +400,7 @@ const FILTER_CONFIG = [
 
 function CompactProjectCard({ project }) {
   const hasDetail = PROJECTS_WITH_DETAILS.includes(project.id);
+  const hasLanding = PROJECTS_WITH_LANDING.includes(project.id);
 
   const cardContent = (
     <>
@@ -399,14 +415,20 @@ function CompactProjectCard({ project }) {
         )}
       </div>
       <p className="text-xs text-slate-600 mb-3 m-0 line-clamp-2">{project.thesis}</p>
-      <div className="flex items-center gap-2">
-        <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-indigo-50 border border-indigo-200 text-indigo-600">
-          Layer {project.layer}
-        </span>
+      <div className="flex items-center flex-wrap gap-2">
         {hasDetail && (
           <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-purple-50 border border-purple-200 text-purple-600">
             View Plan
           </span>
+        )}
+        {hasLanding && (
+          <Link
+            href={`/landing/${project.id}`}
+            onClick={(e) => e.stopPropagation()}
+            className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-sky-50 border border-sky-200 text-sky-600 no-underline hover:bg-sky-100"
+          >
+            Landing →
+          </Link>
         )}
       </div>
     </>

@@ -537,7 +537,10 @@ export default function LandingPage({ params }) {
               </Link>
               <p className="text-sm text-slate-500">Solo AI Product Incubator</p>
             </div>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap gap-4 sm:gap-6">
+              <Link href={`/projects/${params.id}`} className="text-sm text-slate-500 hover:text-slate-900 no-underline">
+                View Full Plan →
+              </Link>
               <Link href="/projects" className="text-sm text-slate-500 hover:text-slate-900 no-underline">
                 All Projects
               </Link>

@@ -125,7 +125,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Active Project */}
+      {/* Active Projects */}
       <section className="py-12 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
@@ -133,48 +133,67 @@ export default function HomePage() {
             <p className="text-sm sm:text-base text-slate-600">What's getting attention right now</p>
           </div>
 
-          {/* Guildry Card */}
-          <div className="max-w-2xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Guildry Card */}
             <div className="relative group">
-              {/* Glow effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-blue-500 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity" />
-
-              <div className="relative bg-white rounded-2xl border border-sky-200 p-5 sm:p-8 shadow-xl shadow-sky-100/50">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4 sm:mb-6">
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-xl sm:text-2xl shadow-lg shadow-sky-200 flex-shrink-0">
+              <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-2xl blur-lg opacity-20 group-hover:opacity-35 transition-opacity" />
+              <div className="relative bg-white rounded-2xl border border-teal-200 p-5 sm:p-6 shadow-xl shadow-teal-100/50 h-full flex flex-col">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center text-lg shadow-lg shadow-teal-200 flex-shrink-0">
                       📐
                     </div>
                     <div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Guildry</h3>
-                      <p className="text-sm sm:text-base text-slate-500">Project intelligence for agencies</p>
+                      <h3 className="text-lg font-bold text-slate-900">Guildry</h3>
+                      <p className="text-xs text-slate-500">Project intelligence</p>
                     </div>
                   </div>
-                  <span className="self-start px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 border border-sky-200 whitespace-nowrap">
-                    In Progress
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-teal-100 text-teal-700 border border-teal-200">
+                    Phase 1
                   </span>
                 </div>
-
-                <p className="text-sm sm:text-base text-slate-600 mb-5 sm:mb-6 leading-relaxed">
-                  Scope, staff, deliver, and learn from every project. A system that gets smarter
-                  with each project you close.
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed flex-1">
+                  Scope, staff, deliver, and learn from every project. A system that gets smarter with each project you close.
                 </p>
-
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Link
-                    href="/projects/guildry"
-                    className="flex-1 text-center px-5 py-3 rounded-xl text-sm font-semibold no-underline bg-slate-900 text-white hover:bg-slate-800 transition-colors"
-                  >
+                <div className="flex gap-2">
+                  <Link href="/projects/guildry" className="flex-1 text-center px-4 py-2.5 rounded-lg text-xs font-semibold no-underline bg-slate-900 text-white hover:bg-slate-800 transition-colors">
                     View Plan
                   </Link>
-                  <a
-                    href="https://guildry.paulb.pro"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center px-5 py-3 rounded-xl text-sm font-semibold no-underline bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100 transition-colors"
-                  >
-                    Open App ↗
+                  <a href="https://guildry.paulb.pro" target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-2.5 rounded-lg text-xs font-semibold no-underline bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 transition-colors">
+                    Open ↗
                   </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Launchpad Card */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur-lg opacity-20 group-hover:opacity-35 transition-opacity" />
+              <div className="relative bg-white rounded-2xl border border-blue-200 p-5 sm:p-6 shadow-xl shadow-blue-100/50 h-full flex flex-col">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-lg shadow-lg shadow-blue-200 flex-shrink-0">
+                      🚀
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">Launchpad</h3>
+                      <p className="text-xs text-slate-500">Idea validation</p>
+                    </div>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-100 text-blue-700 border border-blue-200">
+                    Live
+                  </span>
+                </div>
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed flex-1">
+                  Landing pages for each idea. Collect waitlist signups as keep/kill signals. Ship, test, learn, repeat.
+                </p>
+                <div className="flex gap-2">
+                  <Link href="/projects/launchpad" className="flex-1 text-center px-4 py-2.5 rounded-lg text-xs font-semibold no-underline bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                    View Plan
+                  </Link>
+                  <Link href="/landing/smart-cms" className="flex-1 text-center px-4 py-2.5 rounded-lg text-xs font-semibold no-underline bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors">
+                    See Example
+                  </Link>
                 </div>
               </div>
             </div>
