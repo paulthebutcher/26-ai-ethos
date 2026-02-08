@@ -1,35 +1,51 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { exec } from "child_process";
-import { promisify } from "util";
-import fs from "fs/promises";
-import path from "path";
-
-const execAsync = promisify(exec);
 
 // Initialize Anthropic client
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// Base path for the repo (in production, this would be configurable)
-const REPO_BASE = process.env.REPO_PATH || process.cwd();
+// GitHub config
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER || "paulbutcher";
+const GITHUB_REPO = process.env.GITHUB_REPO || "Guildry";
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
+
+// GitHub API helper
+async function githubAPI(endpoint, options = {}) {
+  const url = `https://api.github.com${endpoint}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const error = await res.text();
+    throw new Error(`GitHub API error: ${res.status} - ${error}`);
+  }
+
+  return res.json();
+}
 
 // Define tools for Claude
 const tools = [
   {
     name: "list_files",
-    description: "List files and directories at a given path. Returns file names with indicators for directories.",
+    description:
+      "List files and directories at a given path in the GitHub repository.",
     input_schema: {
       type: "object",
       properties: {
         path: {
           type: "string",
-          description: "Relative path from repo root. Use '.' for root directory.",
-        },
-        pattern: {
-          type: "string",
-          description: "Optional glob pattern to filter files (e.g., '*.jsx', '*.ts')",
+          description:
+            "Path relative to repo root. Use empty string or '.' for root.",
         },
       },
       required: ["path"],
@@ -37,13 +53,13 @@ const tools = [
   },
   {
     name: "read_file",
-    description: "Read the contents of a file. Returns the full file content.",
+    description: "Read the contents of a file from the GitHub repository.",
     input_schema: {
       type: "object",
       properties: {
         path: {
           type: "string",
-          description: "Relative path to the file from repo root",
+          description: "Path to the file relative to repo root",
         },
       },
       required: ["path"],
@@ -51,128 +67,146 @@ const tools = [
   },
   {
     name: "write_file",
-    description: "Write content to a file. Creates the file if it doesn't exist, overwrites if it does.",
+    description:
+      "Create or update a file in the GitHub repository. This creates a commit.",
     input_schema: {
       type: "object",
       properties: {
         path: {
           type: "string",
-          description: "Relative path to the file from repo root",
+          description: "Path to the file relative to repo root",
         },
         content: {
           type: "string",
           description: "The content to write to the file",
         },
+        message: {
+          type: "string",
+          description: "Commit message describing the change",
+        },
       },
-      required: ["path", "content"],
+      required: ["path", "content", "message"],
     },
   },
   {
-    name: "search_files",
-    description: "Search for text patterns in files. Uses grep-like search.",
+    name: "search_code",
+    description: "Search for code patterns across the repository using GitHub code search.",
     input_schema: {
       type: "object",
       properties: {
-        pattern: {
+        query: {
           type: "string",
-          description: "The text or regex pattern to search for",
+          description: "Search query (code pattern to find)",
         },
         path: {
           type: "string",
-          description: "Directory to search in (relative to repo root). Defaults to '.'",
+          description: "Optional path filter (e.g., 'ethos/app' to search only in that directory)",
         },
-        file_pattern: {
+        extension: {
           type: "string",
-          description: "File pattern to limit search (e.g., '*.jsx')",
+          description: "Optional file extension filter (e.g., 'jsx', 'ts')",
         },
       },
-      required: ["pattern"],
+      required: ["query"],
     },
   },
   {
-    name: "git_status",
-    description: "Get the current git status showing modified, staged, and untracked files.",
-    input_schema: {
-      type: "object",
-      properties: {},
-    },
-  },
-  {
-    name: "git_diff",
-    description: "Show the diff of current changes.",
+    name: "get_recent_commits",
+    description: "Get recent commits to see what has changed.",
     input_schema: {
       type: "object",
       properties: {
-        file: {
+        path: {
           type: "string",
-          description: "Optional specific file to diff",
+          description: "Optional path to filter commits by",
+        },
+        count: {
+          type: "number",
+          description: "Number of commits to fetch (default 10)",
         },
       },
     },
   },
   {
-    name: "git_commit",
-    description: "Stage and commit changes with a message.",
+    name: "get_file_history",
+    description: "Get the commit history for a specific file.",
+    input_schema: {
+      type: "object",
+      properties: {
+        path: {
+          type: "string",
+          description: "Path to the file",
+        },
+      },
+      required: ["path"],
+    },
+  },
+  {
+    name: "create_branch",
+    description: "Create a new branch from the current main branch.",
+    input_schema: {
+      type: "object",
+      properties: {
+        name: {
+          type: "string",
+          description: "Name for the new branch",
+        },
+      },
+      required: ["name"],
+    },
+  },
+  {
+    name: "create_pull_request",
+    description: "Create a pull request from a branch to main.",
+    input_schema: {
+      type: "object",
+      properties: {
+        title: {
+          type: "string",
+          description: "PR title",
+        },
+        body: {
+          type: "string",
+          description: "PR description",
+        },
+        head: {
+          type: "string",
+          description: "Branch name to merge from",
+        },
+      },
+      required: ["title", "head"],
+    },
+  },
+  {
+    name: "trigger_deploy",
+    description:
+      "Trigger a Vercel deployment by creating an empty commit (useful after multiple file changes).",
     input_schema: {
       type: "object",
       properties: {
         message: {
           type: "string",
-          description: "The commit message",
-        },
-        files: {
-          type: "array",
-          items: { type: "string" },
-          description: "Specific files to stage and commit. If empty, stages all changes.",
+          description: "Deploy commit message",
         },
       },
-      required: ["message"],
-    },
-  },
-  {
-    name: "git_push",
-    description: "Push committed changes to the remote repository.",
-    input_schema: {
-      type: "object",
-      properties: {},
-    },
-  },
-  {
-    name: "run_build",
-    description: "Run the build command to check for errors.",
-    input_schema: {
-      type: "object",
-      properties: {
-        project: {
-          type: "string",
-          description: "Which project to build: 'ethos' or 'guildry'",
-        },
-      },
-      required: ["project"],
     },
   },
 ];
 
 // Tool implementations
 async function listFiles(input) {
-  const targetPath = path.join(REPO_BASE, input.path || ".");
   try {
-    const entries = await fs.readdir(targetPath, { withFileTypes: true });
-    let results = entries.map((entry) => ({
-      name: entry.name,
-      type: entry.isDirectory() ? "directory" : "file",
-    }));
+    const path = input.path === "." || !input.path ? "" : input.path;
+    const data = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`
+    );
 
-    // Filter by pattern if provided
-    if (input.pattern) {
-      const regex = new RegExp(
-        input.pattern.replace(/\*/g, ".*").replace(/\?/g, ".")
-      );
-      results = results.filter((r) => regex.test(r.name));
+    if (!Array.isArray(data)) {
+      return `${path} is a file, not a directory`;
     }
 
-    return results
-      .map((r) => `${r.type === "directory" ? "📁" : "📄"} ${r.name}`)
+    return data
+      .map((item) => `${item.type === "dir" ? "📁" : "📄"} ${item.name}`)
       .join("\n");
   } catch (error) {
     return `Error listing files: ${error.message}`;
@@ -180,9 +214,17 @@ async function listFiles(input) {
 }
 
 async function readFile(input) {
-  const targetPath = path.join(REPO_BASE, input.path);
   try {
-    const content = await fs.readFile(targetPath, "utf-8");
+    const data = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${input.path}?ref=${GITHUB_BRANCH}`
+    );
+
+    if (data.type !== "file") {
+      return `${input.path} is not a file`;
+    }
+
+    // Decode base64 content
+    const content = Buffer.from(data.content, "base64").toString("utf-8");
     return content;
   } catch (error) {
     return `Error reading file: ${error.message}`;
@@ -190,100 +232,185 @@ async function readFile(input) {
 }
 
 async function writeFile(input) {
-  const targetPath = path.join(REPO_BASE, input.path);
   try {
-    // Ensure directory exists
-    await fs.mkdir(path.dirname(targetPath), { recursive: true });
-    await fs.writeFile(targetPath, input.content, "utf-8");
-    return `Successfully wrote to ${input.path}`;
+    // First, try to get the current file to get its SHA (needed for updates)
+    let sha;
+    try {
+      const existing = await githubAPI(
+        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${input.path}?ref=${GITHUB_BRANCH}`
+      );
+      sha = existing.sha;
+    } catch {
+      // File doesn't exist yet, that's fine
+    }
+
+    // Create or update the file
+    const body = {
+      message: input.message || `Update ${input.path}`,
+      content: Buffer.from(input.content).toString("base64"),
+      branch: GITHUB_BRANCH,
+    };
+
+    if (sha) {
+      body.sha = sha;
+    }
+
+    await githubAPI(`/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${input.path}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    });
+
+    return `✅ Successfully ${sha ? "updated" : "created"} ${input.path}\nCommit: "${input.message}"`;
   } catch (error) {
     return `Error writing file: ${error.message}`;
   }
 }
 
-async function searchFiles(input) {
+async function searchCode(input) {
   try {
-    const searchPath = path.join(REPO_BASE, input.path || ".");
-    let cmd = `grep -r -n "${input.pattern}" "${searchPath}"`;
-    if (input.file_pattern) {
-      cmd += ` --include="${input.file_pattern}"`;
+    let query = `${input.query} repo:${GITHUB_OWNER}/${GITHUB_REPO}`;
+    if (input.path) {
+      query += ` path:${input.path}`;
     }
-    cmd += " 2>/dev/null | head -50";
-
-    const { stdout } = await execAsync(cmd);
-    return stdout || "No matches found";
-  } catch (error) {
-    if (error.code === 1) return "No matches found";
-    return `Error searching: ${error.message}`;
-  }
-}
-
-async function gitStatus() {
-  try {
-    const { stdout } = await execAsync(`cd "${REPO_BASE}" && git status --short`);
-    return stdout || "Working tree clean";
-  } catch (error) {
-    return `Error: ${error.message}`;
-  }
-}
-
-async function gitDiff(input) {
-  try {
-    let cmd = `cd "${REPO_BASE}" && git diff`;
-    if (input.file) {
-      cmd += ` "${input.file}"`;
-    }
-    const { stdout } = await execAsync(cmd);
-    return stdout || "No changes";
-  } catch (error) {
-    return `Error: ${error.message}`;
-  }
-}
-
-async function gitCommit(input) {
-  try {
-    // Stage files
-    if (input.files && input.files.length > 0) {
-      await execAsync(
-        `cd "${REPO_BASE}" && git add ${input.files.map((f) => `"${f}"`).join(" ")}`
-      );
-    } else {
-      await execAsync(`cd "${REPO_BASE}" && git add -A`);
+    if (input.extension) {
+      query += ` extension:${input.extension}`;
     }
 
-    // Commit
-    const { stdout } = await execAsync(
-      `cd "${REPO_BASE}" && git commit -m "${input.message.replace(/"/g, '\\"')}"`
+    const data = await githubAPI(
+      `/search/code?q=${encodeURIComponent(query)}&per_page=20`
     );
-    return stdout;
+
+    if (data.total_count === 0) {
+      return "No matches found";
+    }
+
+    return data.items
+      .map((item) => `📄 ${item.path}`)
+      .join("\n") + `\n\n(${data.total_count} total matches)`;
   } catch (error) {
-    return `Error: ${error.message}`;
+    // GitHub code search has rate limits, fallback to a simpler approach
+    return `Search error (may be rate limited): ${error.message}. Try reading specific files instead.`;
   }
 }
 
-async function gitPush() {
+async function getRecentCommits(input) {
   try {
-    const { stdout } = await execAsync(`cd "${REPO_BASE}" && git push`);
-    return stdout || "Pushed successfully";
+    let url = `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?sha=${GITHUB_BRANCH}&per_page=${input.count || 10}`;
+    if (input.path) {
+      url += `&path=${input.path}`;
+    }
+
+    const data = await githubAPI(url);
+
+    return data
+      .map((commit) => {
+        const date = new Date(commit.commit.author.date).toLocaleDateString();
+        const msg = commit.commit.message.split("\n")[0].slice(0, 60);
+        return `• ${date}: ${msg}`;
+      })
+      .join("\n");
   } catch (error) {
-    return `Error: ${error.message}`;
+    return `Error fetching commits: ${error.message}`;
   }
 }
 
-async function runBuild(input) {
+async function getFileHistory(input) {
   try {
-    const projectPath =
-      input.project === "guildry"
-        ? path.join(REPO_BASE, "guildry/apps/web")
-        : REPO_BASE;
-
-    const { stdout, stderr } = await execAsync(
-      `cd "${projectPath}" && npm run build 2>&1 | tail -40`,
-      { timeout: 120000 }
+    const data = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?sha=${GITHUB_BRANCH}&path=${input.path}&per_page=10`
     );
-    return stdout + (stderr ? `\nStderr: ${stderr}` : "");
+
+    return data
+      .map((commit) => {
+        const date = new Date(commit.commit.author.date).toLocaleDateString();
+        const msg = commit.commit.message.split("\n")[0].slice(0, 50);
+        return `• ${date}: ${msg}`;
+      })
+      .join("\n");
   } catch (error) {
-    return `Build output:\n${error.stdout || ""}\n${error.stderr || ""}\nExit code: ${error.code}`;
+    return `Error fetching history: ${error.message}`;
+  }
+}
+
+async function createBranch(input) {
+  try {
+    // Get the SHA of the main branch
+    const ref = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/ref/heads/${GITHUB_BRANCH}`
+    );
+
+    // Create new branch
+    await githubAPI(`/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/refs`, {
+      method: "POST",
+      body: JSON.stringify({
+        ref: `refs/heads/${input.name}`,
+        sha: ref.object.sha,
+      }),
+    });
+
+    return `✅ Created branch: ${input.name}`;
+  } catch (error) {
+    return `Error creating branch: ${error.message}`;
+  }
+}
+
+async function createPullRequest(input) {
+  try {
+    const data = await githubAPI(`/repos/${GITHUB_OWNER}/${GITHUB_REPO}/pulls`, {
+      method: "POST",
+      body: JSON.stringify({
+        title: input.title,
+        body: input.body || "",
+        head: input.head,
+        base: GITHUB_BRANCH,
+      }),
+    });
+
+    return `✅ Created PR #${data.number}: ${data.html_url}`;
+  } catch (error) {
+    return `Error creating PR: ${error.message}`;
+  }
+}
+
+async function triggerDeploy(input) {
+  try {
+    // Get current commit SHA
+    const ref = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/ref/heads/${GITHUB_BRANCH}`
+    );
+
+    // Get the current commit
+    const commit = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/commits/${ref.object.sha}`
+    );
+
+    // Create a new commit with the same tree (empty commit)
+    const newCommit = await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/commits`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          message: input.message || "Trigger deploy",
+          tree: commit.tree.sha,
+          parents: [ref.object.sha],
+        }),
+      }
+    );
+
+    // Update the branch reference
+    await githubAPI(
+      `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/refs/heads/${GITHUB_BRANCH}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({
+          sha: newCommit.sha,
+        }),
+      }
+    );
+
+    return `✅ Deploy triggered. Vercel will pick up the change shortly.`;
+  } catch (error) {
+    return `Error triggering deploy: ${error.message}`;
   }
 }
 
@@ -296,18 +423,18 @@ async function executeTool(name, input) {
       return await readFile(input);
     case "write_file":
       return await writeFile(input);
-    case "search_files":
-      return await searchFiles(input);
-    case "git_status":
-      return await gitStatus();
-    case "git_diff":
-      return await gitDiff(input);
-    case "git_commit":
-      return await gitCommit(input);
-    case "git_push":
-      return await gitPush();
-    case "run_build":
-      return await runBuild(input);
+    case "search_code":
+      return await searchCode(input);
+    case "get_recent_commits":
+      return await getRecentCommits(input);
+    case "get_file_history":
+      return await getFileHistory(input);
+    case "create_branch":
+      return await createBranch(input);
+    case "create_pull_request":
+      return await createPullRequest(input);
+    case "trigger_deploy":
+      return await triggerDeploy(input);
     default:
       return `Unknown tool: ${name}`;
   }
@@ -323,32 +450,43 @@ export async function POST(request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Check GitHub token
+    if (!GITHUB_TOKEN) {
+      return NextResponse.json(
+        { error: "GitHub token not configured" },
+        { status: 500 }
+      );
+    }
+
     const { messages } = await request.json();
 
     // System prompt for the dev assistant
-    const systemPrompt = `You are a development assistant for The AI Ethos, a solo AI product incubator. You have access to the codebase and can help with:
+    const systemPrompt = `You are a development assistant for The AI Ethos, a solo AI product incubator. You have access to the GitHub repository and can help with:
 
 - Reading and understanding code
-- Making edits to files
+- Making edits to files (creates commits directly)
 - Searching for patterns across the codebase
-- Git operations (status, commit, push)
-- Running builds
+- Viewing commit history
+- Creating branches and pull requests
 
-The codebase structure:
+The repository structure:
 - /ethos - The main AI Ethos marketing site (Next.js)
   - /app - Pages and API routes
   - /app/landing/[id] - Landing pages for each product idea
   - /app/projects - Project listing and details
+  - /app/dev - This dev assistant
 - /guildry - The Guildry product (Next.js monorepo)
   - /apps/web - Main Guildry web app
 
-When making changes:
-1. Always read the file first to understand context
-2. Make targeted edits
-3. Run a build to verify changes work
-4. Commit with clear messages
+IMPORTANT: Every write_file call creates a real commit to GitHub. Vercel will auto-deploy on push.
 
-Be concise but thorough. When showing code, show relevant snippets, not entire files.`;
+When making changes:
+1. Read the file first to understand current state
+2. Make targeted, careful edits
+3. Use clear commit messages
+4. For multiple related changes, consider creating a branch and PR
+
+Be concise. Show relevant code snippets, not entire files. When editing, show the specific changes you're making.`;
 
     // Call Claude with tools
     let response = await anthropic.messages.create({
@@ -359,11 +497,17 @@ Be concise but thorough. When showing code, show relevant snippets, not entire f
       messages,
     });
 
+    // Collect all tool uses and results for the final response
+    const allToolUses = [];
+
     // Handle tool use in a loop
     while (response.stop_reason === "tool_use") {
       const toolUseBlocks = response.content.filter(
         (block) => block.type === "tool_use"
       );
+
+      // Track tool uses
+      toolUseBlocks.forEach((t) => allToolUses.push(t.name));
 
       const toolResults = await Promise.all(
         toolUseBlocks.map(async (toolUse) => {
@@ -395,9 +539,7 @@ Be concise but thorough. When showing code, show relevant snippets, not entire f
 
     return NextResponse.json({
       response: textContent?.text || "No response",
-      toolsUsed: response.content
-        .filter((block) => block.type === "tool_use")
-        .map((block) => block.name),
+      toolsUsed: allToolUses,
     });
   } catch (error) {
     console.error("Dev API error:", error);
