@@ -1,397 +1,258 @@
 "use client";
 
-export default function EthosPage() {
+import Link from "next/link";
+
+const STATS = [
+  { value: 1, label: "Building", color: "#0ea5e9" },
+  { value: 14, label: "Evaluating", color: "#6366f1" },
+  { value: 0, label: "Shipped", color: "#22c55e" },
+  { value: 0, label: "Killed", color: "#ef4444" },
+];
+
+const NAV_LINKS = [
+  { href: "/projects", label: "Projects" },
+  { href: "/methodology", label: "Method" },
+  { href: "/log", label: "Log" },
+];
+
+export default function HomePage() {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
-      {/* Header */}
-      <div className="mb-12">
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-600">
-          Concept Brief
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-2 mb-4 text-gradient-warm">
-          Solo AI Product Incubator
-        </h1>
-        <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-          AI has collapsed the time and cost to build software. What used to take a team months
-          now takes one person days. This creates two simultaneous opportunities.
-        </p>
-      </div>
-
-      {/* The Premise */}
-      <section className="mb-16">
-        <div className="rounded-xl border border-slate-200 p-6 bg-slate-50">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-4 mt-0">
-            The Premise
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-lg p-4 border border-slate-200 bg-white">
-              <div className="text-2xl mb-2">🔧</div>
-              <h3 className="font-mono text-sm font-semibold text-slate-800 mb-2 mt-0">
-                Build AI-powered tools
-              </h3>
-              <p className="text-xs text-slate-600 m-0 leading-relaxed">
-                Find existing processes that are painful, slow, or error-prone. Build tools that
-                make things possible that weren't before, not just faster or cheaper versions of the same thing.
-              </p>
-            </div>
-            <div className="rounded-lg p-4 border border-slate-200 bg-white">
-              <div className="text-2xl mb-2">🔄</div>
-              <h3 className="font-mono text-sm font-semibold text-slate-800 mb-2 mt-0">
-                Develop a repeatable system
-              </h3>
-              <p className="text-xs text-slate-600 m-0 leading-relaxed">
-                The process of building and validating tools becomes a methodology that itself
-                becomes a product. The system improves with every cycle.
-              </p>
-            </div>
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white">
+      {/* Nav */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-b border-sky-100">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="font-semibold text-slate-900 no-underline tracking-tight">
+            the ai ethos
+          </Link>
+          <div className="flex items-center gap-8">
+            {NAV_LINKS.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-slate-500 hover:text-slate-900 no-underline transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href="https://guildry.paulb.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium px-4 py-2 rounded-full bg-sky-500 text-white no-underline hover:bg-sky-600 transition-colors shadow-sm shadow-sky-200"
+            >
+              Guildry ↗
+            </a>
           </div>
         </div>
-      </section>
+      </nav>
 
-      {/* The Three Layers - Visual */}
-      <section className="mb-16">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
-          The Model
-        </h2>
-        <p className="text-sm text-slate-600 mb-6">
-          Three layers that feed each other. Each layer stands on its own. None depends on personal
-          brand — the products, the system, and the ecosystem are the value.
-        </p>
-
-        {/* Layer Diagram */}
-        <div className="rounded-xl border border-slate-200 p-8 bg-slate-50 mb-8">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            {/* Layer 1 */}
-            <div className="flex flex-col items-center">
-              <div className="w-28 h-28 rounded-full border-4 border-teal-500 bg-white flex flex-col items-center justify-center shadow-sm">
-                <span className="text-2xl">🏭</span>
-                <span className="font-mono text-[10px] font-bold text-teal-600 mt-1">INCUBATOR</span>
-              </div>
-              <span className="font-mono text-xs text-slate-500 mt-2">Layer 1</span>
-            </div>
-
-            {/* Arrow */}
-            <div className="hidden md:flex flex-col items-center gap-1">
-              <svg className="w-12 h-6 text-slate-300" viewBox="0 0 48 24">
-                <path d="M0 12 H40 M32 4 L44 12 L32 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="text-[9px] text-slate-400 font-mono">feeds</span>
-            </div>
-            <div className="md:hidden text-slate-300 text-xl">↓</div>
-
-            {/* Layer 2 */}
-            <div className="flex flex-col items-center">
-              <div className="w-28 h-28 rounded-full border-4 border-indigo-500 bg-white flex flex-col items-center justify-center shadow-sm">
-                <span className="text-2xl">⚙️</span>
-                <span className="font-mono text-[10px] font-bold text-indigo-600 mt-1">WORKFLOW</span>
-              </div>
-              <span className="font-mono text-xs text-slate-500 mt-2">Layer 2</span>
-            </div>
-
-            {/* Arrow */}
-            <div className="hidden md:flex flex-col items-center gap-1">
-              <svg className="w-12 h-6 text-slate-300" viewBox="0 0 48 24">
-                <path d="M0 12 H40 M32 4 L44 12 L32 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="text-[9px] text-slate-400 font-mono">feeds</span>
-            </div>
-            <div className="md:hidden text-slate-300 text-xl">↓</div>
-
-            {/* Layer 3 */}
-            <div className="flex flex-col items-center">
-              <div className="w-28 h-28 rounded-full border-4 border-amber-500 bg-white flex flex-col items-center justify-center shadow-sm">
-                <span className="text-2xl">🌐</span>
-                <span className="font-mono text-[10px] font-bold text-amber-600 mt-1">ECOSYSTEM</span>
-              </div>
-              <span className="font-mono text-xs text-slate-500 mt-2">Layer 3</span>
-            </div>
-          </div>
-
-          {/* Feedback loops */}
-          <div className="mt-6 pt-6 border-t border-slate-200">
-            <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
-              <span className="font-mono">↺</span>
-              <span>Each layer improves the others. What you learn in one feeds back into the rest.</span>
-            </div>
-          </div>
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-sky-100/80 to-transparent rounded-full blur-3xl" />
+          <div className="absolute top-40 left-20 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl" />
+          <div className="absolute top-60 right-20 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl" />
         </div>
-      </section>
 
-      {/* Layer 1: The Incubator */}
-      <section className="mb-12">
-        <div className="rounded-xl border-2 border-teal-200 overflow-hidden">
-          <div className="p-5 bg-teal-50 border-b border-teal-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-teal-500 flex items-center justify-center text-white font-mono font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="m-0 text-lg font-semibold text-slate-800">The Incubator</h3>
-                <span className="font-mono text-[10px] text-teal-600">~1 MVP per week</span>
-              </div>
+        <div className="relative max-w-5xl mx-auto px-6">
+          <div className="text-center max-w-3xl mx-auto">
+            {/* Status pill */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-sky-200 shadow-sm mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+              </span>
+              <span className="text-sm text-slate-600">Building Guildry</span>
             </div>
-          </div>
-          <div className="p-5 bg-white">
-            <p className="text-sm text-slate-600 mb-4 m-0">
-              A one-person product studio. The thesis for every project is the same: find an existing
-              process that's painful, and build an AI-native tool that actually solves it instead of just making it slightly faster.
+
+            {/* Headline */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 mb-6">
+              Ship fast.
+              <br />
+              <span className="text-gradient">Learn faster.</span>
+            </h1>
+
+            <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+              A one-person AI product incubator. Build tools that solve real problems,
+              kill what doesn't work, double down on what does.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
-                <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Inputs</h4>
-                <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Process pain points from experience & observation</li>
-                  <li>• Reusable build patterns that improve each cycle</li>
-                  <li>• Evaluation frameworks that sharpen over time</li>
-                </ul>
-              </div>
-              <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
-                <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Outputs</h4>
-                <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Deployed MVPs with minimum viable distribution</li>
-                  <li>• Kill/continue decisions with real data</li>
-                  <li>• Documented thesis, build time, and signal</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="rounded-lg p-3 border border-teal-200 bg-teal-50">
-              <p className="text-xs text-slate-600 m-0">
-                <span className="font-mono font-semibold text-teal-700">Constraint:</span> Clear pain point,
-                AI changes the game, path to revenue without a sales team, buildable and testable by one person.
-              </p>
+            {/* CTAs */}
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold no-underline bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
+              >
+                View Projects
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+              <Link
+                href="/methodology"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold no-underline bg-white text-slate-700 border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all"
+              >
+                How It Works
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Layer 2: The Workflow Engine */}
-      <section className="mb-12">
-        <div className="rounded-xl border-2 border-indigo-200 overflow-hidden">
-          <div className="p-5 bg-indigo-50 border-b border-indigo-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-indigo-500 flex items-center justify-center text-white font-mono font-bold">
-                2
+      {/* Stats Bar */}
+      <section className="relative py-12 border-y border-sky-100 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-4 gap-8">
+            {STATS.map((stat, i) => (
+              <div key={i} className="text-center">
+                <div
+                  className="text-4xl font-bold mb-1"
+                  style={{ color: stat.value > 0 ? stat.color : '#cbd5e1' }}
+                >
+                  {stat.value}
+                </div>
+                <div className="text-sm text-slate-500">{stat.label}</div>
               </div>
-              <div>
-                <h3 className="m-0 text-lg font-semibold text-slate-800">The Workflow Engine</h3>
-                <span className="font-mono text-[10px] text-indigo-600">The system becomes the product</span>
-              </div>
-            </div>
-          </div>
-          <div className="p-5 bg-white">
-            <p className="text-sm text-slate-600 mb-4 m-0">
-              The incubator runs on a system: idea sourcing, evaluation, build process, distribution approach,
-              signal reading, portfolio decisions. That system improves with every cycle.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
-                <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Inputs</h4>
-                <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Operational data from Layer 1: what worked, what failed, why</li>
-                  <li>• How long things actually took</li>
-                  <li>• Which distribution channels produced signal</li>
-                </ul>
-              </div>
-              <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
-                <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Outputs</h4>
-                <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Proven, documented methodology</li>
-                  <li>• Tooling and templates for others</li>
-                  <li>• Track record that speaks for itself</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="rounded-lg p-3 border border-indigo-200 bg-indigo-50">
-              <p className="text-xs text-slate-600 m-0">
-                <span className="font-mono font-semibold text-indigo-700">Audience:</span> Product managers,
-                consultants, agency owners, independent operators — anyone trying to figure out how to build with AI effectively.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Layer 3: The Ecosystem */}
-      <section className="mb-16">
-        <div className="rounded-xl border-2 border-amber-200 overflow-hidden">
-          <div className="p-5 bg-amber-50 border-b border-amber-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-white font-mono font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="m-0 text-lg font-semibold text-slate-800">The Ecosystem</h3>
-                <span className="font-mono text-[10px] text-amber-600">Connected tools become more useful together</span>
-              </div>
-            </div>
+      {/* Active Project */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-3">Currently Building</h2>
+            <p className="text-slate-600">What's getting attention right now</p>
           </div>
-          <div className="p-5 bg-white">
-            <p className="text-sm text-slate-600 mb-4 m-0">
-              As the tool portfolio grows, natural patterns emerge. The tools share a common philosophy about
-              how AI should augment existing processes. That shared DNA creates interoperability.
-            </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
-                <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Inputs</h4>
-                <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Strongest tools with proven traction</li>
-                  <li>• Methodology defining how tools relate</li>
-                  <li>• Market signal about which combinations users want</li>
-                </ul>
-              </div>
-              <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
-                <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Outputs</h4>
-                <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Integrated platform where tools work better together</li>
-                  <li>• Data-and-platform agnostic system</li>
-                  <li>• Distribution leverage for new tools</li>
-                </ul>
-              </div>
-            </div>
+          {/* Guildry Card */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative group">
+              {/* Glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-blue-500 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity" />
 
-            <div className="rounded-lg p-3 border border-amber-200 bg-amber-50">
-              <p className="text-xs text-slate-600 m-0">
-                <span className="font-mono font-semibold text-amber-700">Shape:</span> The specific ecosystem
-                reveals itself through incubator work rather than being predetermined.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+              <div className="relative bg-white rounded-2xl border border-sky-200 p-8 shadow-xl shadow-sky-100/50">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-2xl shadow-lg shadow-sky-200">
+                      📐
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900">Guildry</h3>
+                      <p className="text-slate-500">Project intelligence for agencies</p>
+                    </div>
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 border border-sky-200">
+                    In Progress
+                  </span>
+                </div>
 
-      {/* Key Principles */}
-      <section className="mb-16">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
-          Key Principles
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[
-            {
-              title: "Revenue is a learning signal",
-              body: "Every cycle pushes toward a transaction as fast as possible. Not because the money matters at small scale, but because willingness to pay is the clearest signal for whether a problem is real.",
-              icon: "💰",
-            },
-            {
-              title: "The products are the product",
-              body: "The founder is not the brand. Each tool has to sell itself on the strength of the problem it solves. This makes everything more durable, more sellable, and more scalable.",
-              icon: "📦",
-            },
-            {
-              title: "Volume with intention",
-              body: "One MVP per week is ambitious but sustainable. Some weeks produce multiple quick tests. Some weeks a project earns a second cycle. The rhythm is consistent but not rigid.",
-              icon: "🎯",
-            },
-            {
-              title: "Let most things fail",
-              body: "Portfolio value comes from the combination of wins, deliberate kills, and pivots — each with clear reasoning and real data. The methodology is proven by the full distribution of outcomes.",
-              icon: "📊",
-            },
-            {
-              title: "The system improves itself",
-              body: "Every cycle makes the next cycle better. Build kits accumulate patterns. Evaluation sharpens. Distribution channels get tested and ranked. The learning adds up, not just the revenue.",
-              icon: "🔄",
-            },
-          ].map((item, i) => (
-            <div key={i} className="rounded-xl p-5 border border-slate-200 bg-slate-50">
-              <div className="flex items-start gap-3">
-                <span className="text-xl">{item.icon}</span>
-                <div>
-                  <h3 className="font-mono text-sm font-semibold text-slate-800 mb-2 mt-0">{item.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed m-0">{item.body}</p>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Scope, staff, deliver, and learn from every project. A system that gets smarter
+                  with each project you close.
+                </p>
+
+                <div className="flex gap-3">
+                  <Link
+                    href="/projects/guildry"
+                    className="flex-1 text-center px-5 py-3 rounded-xl text-sm font-semibold no-underline bg-slate-900 text-white hover:bg-slate-800 transition-colors"
+                  >
+                    View Plan
+                  </Link>
+                  <a
+                    href="https://guildry.paulb.pro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center px-5 py-3 rounded-xl text-sm font-semibold no-underline bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100 transition-colors"
+                  >
+                    Open App ↗
+                  </a>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* What This Is Not */}
-      <section className="mb-16">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
-          What This Is Not
-        </h2>
-        <div className="rounded-xl border border-slate-200 p-6 bg-slate-50">
-          <div className="flex flex-wrap gap-3">
+      {/* Pipeline Preview */}
+      <section className="py-20 bg-gradient-to-b from-white to-sky-50">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-3">The Pipeline</h2>
+            <p className="text-slate-600">14 ideas in evaluation, ready to test</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              "A content play",
-              "A personal brand exercise",
-              "A single product bet",
-              "A services business",
-            ].map((item, i) => (
-              <span
+              { icon: "🌐", name: "Smart CMS", desc: "Site migration" },
+              { icon: "📋", name: "Changelog", desc: "Auto changelogs" },
+              { icon: "🎨", name: "Brief", desc: "Creative briefs" },
+              { icon: "📝", name: "Recap", desc: "Meeting notes" },
+            ].map((project, i) => (
+              <Link
                 key={i}
-                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-red-200 bg-red-50 text-xs text-red-700 font-mono"
+                href={`/projects/${project.name.toLowerCase().replace(' ', '-')}`}
+                className="group p-5 rounded-xl bg-white border border-slate-200 no-underline hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100/50 transition-all"
               >
-                <span className="text-red-400">✕</span>
-                {item}
-              </span>
+                <div className="text-2xl mb-2">{project.icon}</div>
+                <div className="font-semibold text-slate-900 group-hover:text-sky-600 transition-colors">{project.name}</div>
+                <div className="text-sm text-slate-500">{project.desc}</div>
+              </Link>
             ))}
           </div>
-          <p className="text-sm text-slate-600 mt-4 m-0">
-            It's a system for continuously generating, testing, and scaling AI-powered tools — where
-            the system itself becomes as valuable as any individual tool it produces.
-          </p>
-        </div>
-      </section>
 
-      {/* Open Questions */}
-      <section className="mb-16">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
-          Open Questions
-        </h2>
-        <div className="space-y-3">
-          {[
-            "How should kill/continue decisions be structured to balance learning value against revenue potential?",
-            "What's the right distribution strategy when each tool needs to stand on its own without personal brand behind it?",
-            "At what point does the Layer 2 methodology have enough proof behind it to productize? What does \"enough\" look like?",
-            "When and how does Layer 3 transition from emergent pattern to deliberate product strategy?",
-            "What's the right balance between exploring new ideas and investing deeper in ones showing traction?",
-          ].map((question, i) => (
-            <div key={i} className="rounded-xl p-4 border border-slate-200 bg-white">
-              <div className="flex items-start gap-3">
-                <span className="font-mono text-xs text-slate-400 mt-0.5">{i + 1}.</span>
-                <p className="text-sm text-slate-600 m-0">{question}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Projects CTA */}
-      <section className="border-t border-slate-200 pt-12 mb-16">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-6">
-          Portfolio
-        </h2>
-        <a
-          href="/projects"
-          className="block rounded-xl p-6 border border-slate-200 bg-slate-50 no-underline hover:border-slate-300 hover:shadow-sm transition-all"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🏭</span>
-              <div>
-                <h3 className="font-mono text-lg font-semibold text-slate-800 m-0">View Projects</h3>
-                <span className="font-mono text-[10px] text-slate-500">Track active experiments and outcomes</span>
-              </div>
-            </div>
-            <span className="font-mono text-sm text-slate-400">→</span>
+          <div className="text-center">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 text-sm font-medium text-sky-600 hover:text-sky-700 no-underline"
+            >
+              View all 14 projects
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
-        </a>
+        </div>
+      </section>
+
+      {/* Quick Links */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { href: "/methodology", icon: "⚙️", title: "Methodology", desc: "Frameworks for evaluating, building, and killing projects" },
+              { href: "/log", icon: "📓", title: "Log", desc: "Decisions, learnings, and notes from the journey" },
+              { href: "/stack", icon: "🔧", title: "Stack", desc: "Tools and technologies powering the incubator" },
+            ].map((link, i) => (
+              <Link
+                key={i}
+                href={link.href}
+                className="group p-6 rounded-2xl bg-white border border-slate-200 no-underline hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/50 transition-all"
+              >
+                <div className="text-3xl mb-4">{link.icon}</div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                  {link.title}
+                </h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{link.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="pt-8 border-t border-slate-200 flex justify-between items-center">
-        <span className="font-mono text-[10px] text-slate-500">
-          Solo AI Product Incubator
-        </span>
-        <span className="font-mono text-[10px] text-slate-500">
-          Feb 2026
-        </span>
+      <footer className="py-12 border-t border-sky-100 bg-sky-50/50">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="font-semibold text-slate-900 mb-1">theaiethos.com</div>
+              <div className="text-sm text-slate-500">Solo AI Product Incubator</div>
+            </div>
+            <div className="text-sm text-slate-400">Feb 2026</div>
+          </div>
+        </div>
       </footer>
     </div>
   );
