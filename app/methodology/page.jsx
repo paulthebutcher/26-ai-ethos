@@ -116,7 +116,7 @@ const KILL_CONTINUE = {
     },
     {
       signal: "Usage but no payment intent",
-      note: "Vitamin not painkiller—nice to have but not worth paying for",
+      note: "Vitamin not painkiller. Nice to have but not worth paying for.",
     },
     {
       signal: "Core assumption invalidated",
@@ -124,7 +124,7 @@ const KILL_CONTINUE = {
     },
     {
       signal: "Better opportunity identified",
-      note: "Opportunity cost is real—pivot to higher-signal idea",
+      note: "Opportunity cost is real. Pivot to higher-signal idea.",
     },
   ],
   principle: "Never kill just because it's hard. Kill because the thesis is wrong.",
@@ -181,7 +181,7 @@ const BENCHMARKS = {
     { phase: "Validation", time: "2-4 weeks", cost: "$100-500 (ads, tools)" },
   ],
   principles: [
-    "Speed matters more than perfection—ship fast, iterate faster",
+    "Speed matters more than perfection. Ship fast, iterate faster.",
     "AI development is 10-20x faster than traditional estimates",
     "Most of the 'work' is deciding what to build, not building it",
     "If you're spending more than $500 before first revenue, question the thesis",
@@ -211,7 +211,7 @@ export default function MethodologyPage() {
         </h1>
         <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
           Decision frameworks for evaluating ideas, building products, and knowing when to kill or continue.
-          These aren't rules—they're defaults that can be overridden with good reason.
+          These aren't rules. They're defaults that can be overridden with good reason.
         </p>
       </div>
 
@@ -291,7 +291,7 @@ export default function MethodologyPage() {
         <SectionHeader
           label="Deciding"
           title="Kill / Continue Framework"
-          description="The hardest part isn't building—it's knowing when to stop. Use these signals."
+          description="The hardest part isn't building. It's knowing when to stop. Use these signals."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">

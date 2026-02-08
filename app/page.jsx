@@ -31,7 +31,7 @@ export default function EthosPage() {
               </h3>
               <p className="text-xs text-slate-600 m-0 leading-relaxed">
                 Find existing processes that are painful, slow, or error-prone. Build tools that
-                fundamentally change what's possible — not just faster or cheaper, but structurally different.
+                make things possible that weren't before, not just faster or cheaper versions of the same thing.
               </p>
             </div>
             <div className="rounded-lg p-4 border border-slate-200 bg-white">
@@ -111,7 +111,7 @@ export default function EthosPage() {
           <div className="mt-6 pt-6 border-t border-slate-200">
             <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
               <span className="font-mono">↺</span>
-              <span>Each layer improves the others. Results compound across the system.</span>
+              <span>Each layer improves the others. What you learn in one feeds back into the rest.</span>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function EthosPage() {
           <div className="p-5 bg-white">
             <p className="text-sm text-slate-600 mb-4 m-0">
               A one-person product studio. The thesis for every project is the same: find an existing
-              process that's painful, and build an AI-native tool that fundamentally changes the equation.
+              process that's painful, and build an AI-native tool that actually solves it instead of just making it slightly faster.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -190,7 +190,7 @@ export default function EthosPage() {
               <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
                 <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Inputs</h4>
                 <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Operational data from Layer 1 — what worked, what failed, why</li>
+                  <li>• Operational data from Layer 1: what worked, what failed, why</li>
                   <li>• How long things actually took</li>
                   <li>• Which distribution channels produced signal</li>
                 </ul>
@@ -225,7 +225,7 @@ export default function EthosPage() {
               </div>
               <div>
                 <h3 className="m-0 text-lg font-semibold text-slate-800">The Ecosystem</h3>
-                <span className="font-mono text-[10px] text-amber-600">Connected tools create compounding value</span>
+                <span className="font-mono text-[10px] text-amber-600">Connected tools become more useful together</span>
               </div>
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function EthosPage() {
               <div className="rounded-lg p-4 border border-slate-200 bg-slate-50">
                 <h4 className="font-mono text-[10px] uppercase text-slate-500 mb-2 m-0">Outputs</h4>
                 <ul className="text-xs text-slate-600 m-0 p-0 list-none space-y-1">
-                  <li>• Integrated platform with compounding value</li>
+                  <li>• Integrated platform where tools work better together</li>
                   <li>• Data-and-platform agnostic system</li>
                   <li>• Distribution leverage for new tools</li>
                 </ul>
@@ -273,7 +273,7 @@ export default function EthosPage() {
           {[
             {
               title: "Revenue is a learning signal",
-              body: "Every cycle pushes toward a transaction as fast as possible — not because the money matters at small scale, but because willingness to pay is the highest-fidelity signal for whether a problem is real.",
+              body: "Every cycle pushes toward a transaction as fast as possible. Not because the money matters at small scale, but because willingness to pay is the clearest signal for whether a problem is real.",
               icon: "💰",
             },
             {
@@ -293,7 +293,7 @@ export default function EthosPage() {
             },
             {
               title: "The system improves itself",
-              body: "Every cycle makes the next cycle better. Build kits accumulate patterns. Evaluation sharpens. Distribution channels get tested and ranked. The compounding isn't just in revenue.",
+              body: "Every cycle makes the next cycle better. Build kits accumulate patterns. Evaluation sharpens. Distribution channels get tested and ranked. The learning adds up, not just the revenue.",
               icon: "🔄",
             },
           ].map((item, i) => (
